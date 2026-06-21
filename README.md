@@ -228,6 +228,10 @@ P/D 注册和实际 streaming 请求均成功，
 结果才能标为 `real_disaggregated_pd`。任何失败都应保留 component log 和
 `*_launch_failure.log`。
 
+`real_pd.host_mem_pool_size_gb` 控制每个 P/D EngineCore 的 pinned host-memory overflow
+pool。项目默认设为 4 GiB，因此 1P3D/2P2D/3P1D 都约占 4×4=16 GiB host pool；该参数与
+Decode GPU 上的 `decode_kv_buffer_size` 不是同一块内存。修改后必须重启服务才会生效。
+
 ### 运行 online workload
 
 单次 colocated 示例：

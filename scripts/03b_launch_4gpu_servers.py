@@ -301,6 +301,7 @@ def build_p2p_nccl_plan(
                 "http_port": str(http_port),
                 "send_type": str(real_pd.get("p2p_send_type", "PUT_ASYNC")),
                 "nccl_num_channels": str(real_pd.get("nccl_num_channels", 16)),
+                "mem_pool_size_gb": str(real_pd.get("host_mem_pool_size_gb", 4)),
             },
         }
         memory_util = float(

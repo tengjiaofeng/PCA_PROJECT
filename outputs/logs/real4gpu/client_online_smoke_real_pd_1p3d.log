@@ -1,0 +1,2 @@
+2026-06-21 17:59:28,737 | INFO | Run real_pd_1p3d-20260621T095816Z-133f9916: 2 requests, endpoints=['http://127.0.0.1:10001/v1/completions']
+2026-06-21 17:59:28,748 | INFO | Completed 0 warmup requests

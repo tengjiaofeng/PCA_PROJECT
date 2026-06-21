@@ -45,6 +45,9 @@ real_pd:
   prefill_kv_buffer_size: "1e1"
   # About 8% of a 48GB A6000; tune only after a measured smoke test.
   decode_kv_buffer_size: "4e9"
+  # Pinned host-memory overflow pool allocated by every P/D EngineCore.
+  # 4 instances x 4 GiB = about 16 GiB host RAM for a 1P3D deployment.
+  host_mem_pool_size_gb: 4
   prefill_gpu_memory_utilization: 0.85
   decode_gpu_memory_utilization: 0.70
   max_num_batched_tokens: 8192

@@ -1,6 +1,6 @@
 vLLM disaggregated-prefill support check
 ============================================
-checked_at_utc: 2026-06-21T09:36:57.018826+00:00
+checked_at_utc: 2026-06-21T10:10:39.629457+00:00
 python: /home/tjfeng/anaconda3/envs/vllm/bin/python
 vllm_path: /home/tjfeng/vllm
 vllm_version: 0.18.1rc1.dev264+ge31915063.cu124
@@ -8,11 +8,11 @@ p2p_nccl_connector_found: true
 p2p_nccl_connector_match_files: ["/home/tjfeng/vllm/examples/offline_inference/disaggregated_prefill.py", "/home/tjfeng/vllm/examples/online_serving/disaggregated_prefill.sh", "/home/tjfeng/vllm/examples/online_serving/disaggregated_serving_p2p_nccl_xpyd/disagg_example_p2p_nccl_xpyd.sh", "/home/tjfeng/vllm/vllm/config/kv_transfer.py", "/home/tjfeng/vllm/vllm/distributed/kv_transfer/kv_connector/factory.py", "/home/tjfeng/vllm/vllm/distributed/kv_transfer/kv_connector/v1/p2p/p2p_nccl_connector.py", "/home/tjfeng/vllm/vllm/distributed/kv_transfer/kv_connector/v1/p2p/p2p_nccl_engine.py"]
 p2p_nccl_examples_found: true
 p2p_nccl_example_paths: ["/home/tjfeng/vllm/examples/online_serving/disaggregated_serving_p2p_nccl_xpyd", "/home/tjfeng/vllm/examples/online_serving/disaggregated_serving_p2p_nccl_xpyd/disagg_example_p2p_nccl_xpyd.sh", "/home/tjfeng/vllm/examples/online_serving/disaggregated_serving_p2p_nccl_xpyd/disagg_proxy_p2p_nccl_xpyd.py"]
-p2p_proxy_dependencies: {"aiohttp": true, "msgpack": true, "quart": false, "zmq": true}
-p2p_runtime_dependencies_importable: false
+p2p_proxy_dependencies: {"aiohttp": true, "msgpack": true, "quart": true, "zmq": true}
+p2p_runtime_dependencies_importable: true
 nixl_importable: false
 lmcache_importable: false
 recommended_route: p2p_nccl_xpyd
-real_pd_launch_candidate: false
+real_pd_launch_candidate: true
 runtime_validated: false
 note: P2P source/example discovery does not validate NCCL transport, GPU topology, KV correctness, or end-to-end serving. Only a successful streamed smoke test may produce real_disaggregated_pd results.
