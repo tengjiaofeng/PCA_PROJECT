@@ -1,0 +1,65 @@
+model_name: meta-llama/Llama-3.1-8B-Instruct
+tokenizer_name: meta-llama/Llama-3.1-8B-Instruct
+num_gpus: 4
+gpu_ids: [0, 1, 2, 3]
+dtype: float16
+max_model_len: 8192
+gpu_memory_utilization: 0.85
+enable_prefix_caching: false
+backend: vllm
+serving_mode_list:
+  - colocated_4replica
+  - aggregated_tp4
+  - real_pd_1p3d
+  - real_pd_2p2d
+  - real_pd_3p1d
+ports:
+  colocated: [8100, 8101, 8102, 8103]
+  aggregated_tp4: 8200
+  pd_prefill: [8300, 8301, 8302]
+  pd_decode: [8400, 8401, 8402]
+  # P2P NCCL example exposes client HTTP on 10001 and service discovery on 30001.
+  pd_proxy: 10001
+  pd_discovery_proxy: 30001
+request_timeout_s: 300
+server_startup_timeout_s: 1200
+health_check_interval_s: 2
+client_concurrency_list: [1, 2, 4, 8, 16, 32]
+arrival_rates: [0.5, 1.0, 2.0, 4.0, 8.0]
+warmup_requests: 10
+max_requests: 200
+seed: 42
+
+# Real PD is experimental and is never silently replaced by an emulation.
+# The launcher uses the proxy shipped with the current editable vLLM checkout.
+real_pd:
+  # Route is selected by check_vllm_disagg_support(); P2P NCCL is preferred.
+  connector: auto
+  p2p_nccl_example_dir: /home/tjfeng/vllm/examples/online_serving/disaggregated_serving_p2p_nccl_xpyd
+  p2p_nccl_proxy_script: /home/tjfeng/vllm/examples/online_serving/disaggregated_serving_p2p_nccl_xpyd/disagg_proxy_p2p_nccl_xpyd.py
+  p2p_nccl_shell_example: /home/tjfeng/vllm/examples/online_serving/disaggregated_serving_p2p_nccl_xpyd/disagg_example_p2p_nccl_xpyd.sh
+  prefill_kv_ports: [21001, 21002, 21003]
+  decode_kv_ports: [22001, 22002, 22003]
+  p2p_send_type: PUT_ASYNC
+  nccl_num_channels: 16
+  prefill_kv_buffer_size: "1e1"
+  # About 8% of a 48GB A6000; tune only after a measured smoke test.
+  decode_kv_buffer_size: "4e9"
+  prefill_gpu_memory_utilization: 0.85
+  decode_gpu_memory_utilization: 0.70
+  max_num_batched_tokens: 8192
+  max_num_seqs: 256
+  # NIXL remains a secondary route and is not installed automatically.
+  kv_buffer_device: cuda
+  kv_load_failure_policy: fail
+  side_channel_port_base: 5600
+  proxy_script_candidates:
+    - /home/tjfeng/vllm/tests/v1/kv_connector/nixl_integration/toy_proxy_server.py
+    - /home/tjfeng/vllm/examples/online_serving/disaggregated_serving/disagg_proxy_demo.py
+
+workloads:
+  - data/processed/workload_mixed_30p70d_synthetic_unique.jsonl
+  - data/processed/workload_mixed_50p50d_synthetic_unique.jsonl
+  - data/processed/workload_mixed_70p30d_synthetic_unique.jsonl
+  - data/processed/workload_decode_heavy_512_synthetic_unique.jsonl
+  - data/processed/workload_prefill_heavy_4k_synthetic_unique.jsonl

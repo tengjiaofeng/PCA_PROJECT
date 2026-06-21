@@ -1,0 +1,6 @@
+MODE=aggregated_tp4
+MODEL=meta-llama/Llama-3.1-8B-Instruct
+PREFIX_CACHING_ENABLED=False
+[aggregated_tp4] CUDA_VISIBLE_DEVICES=0,1,2,3 /home/tjfeng/anaconda3/envs/vllm/bin/python -m vllm.entrypoints.openai.api_server --model meta-llama/Llama-3.1-8B-Instruct --host 127.0.0.1 --port 8200 --dtype float16 --max-model-len 8192 --gpu-memory-utilization 0.85 --tensor-parallel-size 4 --no-enable-prefix-caching
+Launch plan written to outputs/logs/real4gpu/aggregated_tp4_launch_plan.json
+Dry run: no server process was started.

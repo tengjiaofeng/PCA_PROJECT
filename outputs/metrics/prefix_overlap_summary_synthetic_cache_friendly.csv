@@ -1,0 +1,10 @@
+workload_name,workload_mode,num_requests,avg_prompt_len,p50_lcp_tokens,p95_lcp_tokens,max_lcp_tokens,avg_lcp_tokens,prefix_reuse_ratio_estimated
+short_short,synthetic_cache_friendly,200,128.0,65.0,65.0,67,40.913,0.8
+prefill_heavy_2k,synthetic_cache_friendly,200,2048.0,65.0,65.0,67,42.6605,0.8
+prefill_heavy_4k,synthetic_cache_friendly,200,4096.0,65.0,65.0,67,41.638,0.8
+decode_heavy_256,synthetic_cache_friendly,200,256.0,64.0,65.0,66,41.1555,0.8
+decode_heavy_512,synthetic_cache_friendly,200,256.0,64.0,65.0,66,41.2035,0.8
+long_long,synthetic_cache_friendly,200,2048.0,65.0,65.0,67,40.972,0.8
+mixed_30p70d,synthetic_cache_friendly,200,1141.76,65.0,65.0,66,41.7435,0.8
+mixed_50p50d,synthetic_cache_friendly,200,1756.16,64.0,65.0,66,41.7265,0.8
+mixed_70p30d,synthetic_cache_friendly,200,2227.2,64.0,65.0,67,41.425,0.8

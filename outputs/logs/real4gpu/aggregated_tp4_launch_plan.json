@@ -1,0 +1,41 @@
+{
+  "mode": "aggregated_tp4",
+  "dry_run": true,
+  "created_at_utc": "2026-06-21T09:36:56.131767+00:00",
+  "components": [
+    {
+      "name": "aggregated_tp4",
+      "gpu_ids": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "port": 8200,
+      "health_path": "/v1/models",
+      "command": [
+        "/home/tjfeng/anaconda3/envs/vllm/bin/python",
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        "meta-llama/Llama-3.1-8B-Instruct",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8200",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "8192",
+        "--gpu-memory-utilization",
+        "0.85",
+        "--tensor-parallel-size",
+        "4",
+        "--no-enable-prefix-caching"
+      ],
+      "env": {
+        "CUDA_VISIBLE_DEVICES": "0,1,2,3"
+      }
+    }
+  ]
+}

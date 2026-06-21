@@ -1,0 +1,10 @@
+workload_name,workload_mode,num_requests,avg_prompt_len,avg_output_len,prefill_heavy_ratio,decode_heavy_ratio,avg_lcp_tokens,p95_lcp_tokens,max_lcp_tokens
+short_short,synthetic_cache_friendly,200,128.0,64.0,0.0,0.0,40.913,65.0,67
+prefill_heavy_2k,synthetic_cache_friendly,200,2048.0,64.0,1.0,0.0,42.6605,65.0,67
+prefill_heavy_4k,synthetic_cache_friendly,200,4096.0,64.0,1.0,0.0,41.638,65.0,67
+decode_heavy_256,synthetic_cache_friendly,200,256.0,256.0,0.0,1.0,41.1555,65.0,66
+decode_heavy_512,synthetic_cache_friendly,200,256.0,512.0,0.0,1.0,41.2035,65.0,66
+long_long,synthetic_cache_friendly,200,2048.0,256.0,0.0,0.0,40.972,65.0,67
+mixed_30p70d,synthetic_cache_friendly,200,1141.76,288.0,0.3,0.7,41.7435,65.0,66
+mixed_50p50d,synthetic_cache_friendly,200,1756.16,230.4,0.5,0.5,41.7265,65.0,66
+mixed_70p30d,synthetic_cache_friendly,200,2227.2,158.72,0.7,0.3,41.425,65.0,67

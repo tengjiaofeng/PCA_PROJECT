@@ -1,0 +1,131 @@
+{
+  "mode": "colocated_4replica",
+  "dry_run": true,
+  "created_at_utc": "2026-06-21T09:36:55.886766+00:00",
+  "components": [
+    {
+      "name": "colocated_0",
+      "gpu_ids": [
+        0
+      ],
+      "port": 8100,
+      "health_path": "/v1/models",
+      "command": [
+        "/home/tjfeng/anaconda3/envs/vllm/bin/python",
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        "meta-llama/Llama-3.1-8B-Instruct",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8100",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "8192",
+        "--gpu-memory-utilization",
+        "0.85",
+        "--tensor-parallel-size",
+        "1",
+        "--no-enable-prefix-caching"
+      ],
+      "env": {
+        "CUDA_VISIBLE_DEVICES": "0"
+      }
+    },
+    {
+      "name": "colocated_1",
+      "gpu_ids": [
+        1
+      ],
+      "port": 8101,
+      "health_path": "/v1/models",
+      "command": [
+        "/home/tjfeng/anaconda3/envs/vllm/bin/python",
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        "meta-llama/Llama-3.1-8B-Instruct",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8101",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "8192",
+        "--gpu-memory-utilization",
+        "0.85",
+        "--tensor-parallel-size",
+        "1",
+        "--no-enable-prefix-caching"
+      ],
+      "env": {
+        "CUDA_VISIBLE_DEVICES": "1"
+      }
+    },
+    {
+      "name": "colocated_2",
+      "gpu_ids": [
+        2
+      ],
+      "port": 8102,
+      "health_path": "/v1/models",
+      "command": [
+        "/home/tjfeng/anaconda3/envs/vllm/bin/python",
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        "meta-llama/Llama-3.1-8B-Instruct",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8102",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "8192",
+        "--gpu-memory-utilization",
+        "0.85",
+        "--tensor-parallel-size",
+        "1",
+        "--no-enable-prefix-caching"
+      ],
+      "env": {
+        "CUDA_VISIBLE_DEVICES": "2"
+      }
+    },
+    {
+      "name": "colocated_3",
+      "gpu_ids": [
+        3
+      ],
+      "port": 8103,
+      "health_path": "/v1/models",
+      "command": [
+        "/home/tjfeng/anaconda3/envs/vllm/bin/python",
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        "meta-llama/Llama-3.1-8B-Instruct",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8103",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "8192",
+        "--gpu-memory-utilization",
+        "0.85",
+        "--tensor-parallel-size",
+        "1",
+        "--no-enable-prefix-caching"
+      ],
+      "env": {
+        "CUDA_VISIBLE_DEVICES": "3"
+      }
+    }
+  ]
+}

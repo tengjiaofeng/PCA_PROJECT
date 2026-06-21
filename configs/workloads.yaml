@@ -1,0 +1,51 @@
+seed: 42
+
+workloads:
+  short_short:
+    prompt_len: 128
+    output_len: 64
+
+  prefill_heavy_2k:
+    prompt_len: 2048
+    output_len: 64
+
+  prefill_heavy_4k:
+    prompt_len: 4096
+    output_len: 64
+
+  decode_heavy_256:
+    prompt_len: 256
+    output_len: 256
+
+  decode_heavy_512:
+    prompt_len: 256
+    output_len: 512
+
+  long_long:
+    prompt_len: 2048
+    output_len: 256
+
+  mixed_30p70d:
+    type: mixture
+    components:
+      - workload: prefill_heavy_2k
+        probability: 0.30
+      - workload: decode_heavy_512
+        probability: 0.70
+
+  mixed_50p50d:
+    type: mixture
+    components:
+      - workload: prefill_heavy_2k
+        probability: 0.50
+      - workload: decode_heavy_512
+        probability: 0.50
+
+  mixed_70p30d:
+    type: mixture
+    components:
+      - workload: prefill_heavy_2k
+        probability: 0.70
+      - workload: decode_heavy_512
+        probability: 0.30
+

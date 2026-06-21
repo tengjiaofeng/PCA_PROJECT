@@ -1,0 +1,2 @@
+2026-06-20 13:21:19 | INFO | Writing run log to /home/tjfeng/PCA_PROJECT/outputs/logs/benchmark_workload_mixed_50p50d.log
+2026-06-20 13:21:19 | INFO | Loaded 200 requests from data/processed/workload_mixed_50p50d.jsonl (workload=mixed_50p50d)

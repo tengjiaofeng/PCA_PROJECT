@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-06-20T07:35:20.855160+00:00",
+  "model_name": "meta-llama/Llama-3.1-8B-Instruct",
+  "backend": "vllm",
+  "measurement_semantics": {
+    "ttft_ms": "offline first-output proxy from an isolated request",
+    "prefill_cost_ms": "ttft_ms for output_len=1",
+    "decode_total_ms": "max(total_latency_ms - ttft_ms, 0)",
+    "tpot_ms": "decode_total_ms / (output_len - 1)",
+    "cache_state": "prefix cache reset before every measured request"
+  },
+  "training_rows": 180,
+  "failed_rows": 0,
+  "prefill_cost_model": {
+    "status": "fitted",
+    "type": "piecewise_linear",
+    "equation": "linear interpolation of mean TTFT at prompt-length knots",
+    "parameters": {
+      "prompt_len_knots": [
+        128,
+        256,
+        512,
+        1024,
+        2048,
+        4096
+      ],
+      "prefill_cost_ms_at_knots": [
+        31.96706771850586,
+        51.766252517700195,
+        82.27524757385254,
+        155.2436351776123,
+        297.53270149230957,
+        611.6289138793945
+      ]
+    },
+    "metrics": {
+      "r2": 0.9999308856133808,
+      "mae_ms": 1.115719477335612,
+      "rmse_ms": 1.679535093679615
+    },
+    "training_rows": 30
+  },
+  "decode_cost_model": {
+    "status": "fitted",
+    "type": "multivariate_linear_with_interaction",
+    "equation": "decode_total_ms = intercept + alpha*(output_len-1) + beta*prompt_len*(output_len-1) + gamma*(output_len-1)^2",
+    "prediction_postprocess": "clamp predicted decode_total_ms to >= 0",
+    "parameters": {
+      "intercept_ms": 1.4276977782078322,
+      "alpha_output_token_ms": 22.775673389183517,
+      "beta_prompt_output_ms_per_token2": 0.00024819340580244613,
+      "gamma_output_quadratic_ms_per_token2": 0.00010201007737956111
+    },
+    "metrics": {
+      "r2": 0.999994651058617,
+      "mae_ms": 6.267087555232371,
+      "rmse_ms": 9.355124218999112
+    },
+    "training_rows": 150
+  }
+}
