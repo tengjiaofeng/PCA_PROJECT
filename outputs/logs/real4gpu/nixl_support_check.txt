@@ -1,0 +1,14 @@
+NIXL / LMCache support check
+===============================
+checked_at_utc: 2026-06-21T18:44:09.969889+00:00
+python: /home/tjfeng/anaconda3/envs/vllm-nixl/bin/python
+vllm_path: /home/tjfeng/vllm
+nixl_importable: true
+lmcache_importable: false
+nixl_connector_found_in_vllm: true
+nixl_connector_path: /home/tjfeng/vllm/vllm/distributed/kv_transfer/kv_connector/v1/nixl_connector.py
+nixl_examples_found: true
+nixl_example_paths: ["/home/tjfeng/vllm/docs/features/nixl_connector_usage.md", "/home/tjfeng/vllm/tests/v1/kv_connector/nixl_integration/run_accuracy_test.sh", "/home/tjfeng/vllm/tests/v1/kv_connector/nixl_integration/toy_proxy_server.py"]
+lmcache_examples_found: true
+lmcache_example_paths: ["/home/tjfeng/vllm/examples/others/lmcache/README.md", "/home/tjfeng/vllm/examples/others/lmcache/cpu_offload_lmcache.py", "/home/tjfeng/vllm/examples/others/lmcache/disagg_prefill_lmcache_v0.py", "/home/tjfeng/vllm/examples/others/lmcache/disagg_prefill_lmcache_v1/configs/lmcache-decoder-config.yaml", "/home/tjfeng/vllm/examples/others/lmcache/disagg_prefill_lmcache_v1/configs/lmcache-prefiller-config.yaml", "/home/tjfeng/vllm/examples/others/lmcache/disagg_prefill_lmcache_v1/disagg_example_nixl.sh", "/home/tjfeng/vllm/examples/others/lmcache/disagg_prefill_lmcache_v1/disagg_proxy_server.py", "/home/tjfeng/vllm/examples/others/lmcache/disagg_prefill_lmcache_v1/disagg_vllm_launcher.sh", "/home/tjfeng/vllm/examples/others/lmcache/kv_cache_sharing_lmcache_v1.py"]
+recommended_next_step: try_vllm_nixl_1p1d_smoke

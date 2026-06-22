@@ -1,0 +1,4 @@
+run_id,preset,serving_mode,workload,arrival_rate,repeat,seed,status,return_code,elapsed_s,output_csv,error_msg
+pilot-mixed_50p50d-real_pd_nixl_1p3d-r1-rep1,pilot,real_pd_nixl_1p3d,mixed_50p50d,1.0,1,42,success,0,47.88,outputs/metrics/real4gpu/online_pilot-mixed_50p50d-real_pd_nixl_1p3d-r1-rep1.csv,
+pilot-mixed_50p50d-real_pd_nixl_2p2d-r1-rep1,pilot,real_pd_nixl_2p2d,mixed_50p50d,1.0,1,42,success,0,47.462,outputs/metrics/real4gpu/online_pilot-mixed_50p50d-real_pd_nixl_2p2d-r1-rep1.csv,
+pilot-mixed_50p50d-real_pd_nixl_3p1d-r1-rep1,pilot,real_pd_nixl_3p1d,mixed_50p50d,1.0,1,42,success,0,48.344,outputs/metrics/real4gpu/online_pilot-mixed_50p50d-real_pd_nixl_3p1d-r1-rep1.csv,

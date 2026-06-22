@@ -1,0 +1,3 @@
+2026-06-22 01:06:58,401 | INFO | Run baseline-mixed_50p50d-colocated_4replica-r1-rep1: 20 requests, endpoints=['http://127.0.0.1:8100/v1/completions', 'http://127.0.0.1:8101/v1/completions', 'http://127.0.0.1:8102/v1/completions', 'http://127.0.0.1:8103/v1/completions']
+2026-06-22 01:07:00,998 | INFO | Completed 1 warmup requests
+2026-06-22 01:07:36,159 | INFO | Wrote outputs/metrics/real4gpu/online_baseline-mixed_50p50d-colocated_4replica-r1-rep1.csv: 20 success, 0 failed

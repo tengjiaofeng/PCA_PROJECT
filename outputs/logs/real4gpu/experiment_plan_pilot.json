@@ -1,0 +1,55 @@
+{
+  "created_at_utc": "2026-06-21T16:54:09.180573+00:00",
+  "python": "/home/tjfeng/anaconda3/envs/vllm-nixl/bin/python",
+  "preset": "pilot",
+  "execute": true,
+  "matrix": {
+    "modes": [
+      "real_pd_nixl_1p3d",
+      "real_pd_nixl_2p2d",
+      "real_pd_nixl_3p1d"
+    ],
+    "workloads": [
+      "data/processed/workload_mixed_50p50d_synthetic_unique.jsonl"
+    ],
+    "arrival_rates": [
+      1.0
+    ],
+    "repeats": 1,
+    "max_requests": 20,
+    "warmup": 1,
+    "concurrency": 4
+  },
+  "jobs": [
+    {
+      "mode": "real_pd_nixl_1p3d",
+      "workload": "data/processed/workload_mixed_50p50d_synthetic_unique.jsonl",
+      "workload_label": "mixed_50p50d",
+      "arrival_rate": 1.0,
+      "repeat": 1,
+      "seed": 42,
+      "run_id": "pilot-mixed_50p50d-real_pd_nixl_1p3d-r1-rep1",
+      "output": "outputs/metrics/real4gpu/online_pilot-mixed_50p50d-real_pd_nixl_1p3d-r1-rep1.csv"
+    },
+    {
+      "mode": "real_pd_nixl_2p2d",
+      "workload": "data/processed/workload_mixed_50p50d_synthetic_unique.jsonl",
+      "workload_label": "mixed_50p50d",
+      "arrival_rate": 1.0,
+      "repeat": 1,
+      "seed": 42,
+      "run_id": "pilot-mixed_50p50d-real_pd_nixl_2p2d-r1-rep1",
+      "output": "outputs/metrics/real4gpu/online_pilot-mixed_50p50d-real_pd_nixl_2p2d-r1-rep1.csv"
+    },
+    {
+      "mode": "real_pd_nixl_3p1d",
+      "workload": "data/processed/workload_mixed_50p50d_synthetic_unique.jsonl",
+      "workload_label": "mixed_50p50d",
+      "arrival_rate": 1.0,
+      "repeat": 1,
+      "seed": 42,
+      "run_id": "pilot-mixed_50p50d-real_pd_nixl_3p1d-r1-rep1",
+      "output": "outputs/metrics/real4gpu/online_pilot-mixed_50p50d-real_pd_nixl_3p1d-r1-rep1.csv"
+    }
+  ]
+}

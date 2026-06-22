@@ -4,10 +4,12 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import importlib.metadata
 import importlib.util
 import json
 import os
+import re
 import shlex
 import signal
 import socket
@@ -30,6 +32,10 @@ VALID_MODES = (
     "real_pd_1p3d",
     "real_pd_2p2d",
     "real_pd_3p1d",
+    "real_pd_nixl_1p1d",
+    "real_pd_nixl_1p3d",
+    "real_pd_nixl_2p2d",
+    "real_pd_nixl_3p1d",
 )
 
 
@@ -64,6 +70,10 @@ def parse_args() -> argparse.Namespace:
         help="Only write the disaggregated-prefill capability report.",
     )
     parser.add_argument(
+        "--check-nixl-support", action="store_true",
+        help="Only write the read-only NIXL/LMCache capability report.",
+    )
+    parser.add_argument(
         "--allow-experimental-pd", type=str2bool, default=False,
         help="Required to launch a real_pd_* topology after capability checks pass.",
     )
@@ -84,6 +94,39 @@ def load_config(path: Path) -> dict[str, Any]:
     if len(set(cfg["gpu_ids"])) != len(cfg["gpu_ids"]):
         raise ValueError("gpu_ids must be unique")
     return cfg
+
+
+def verified_nixl_1p1d_smoke() -> tuple[bool, str]:
+    """Require measured end-to-end evidence before enabling larger NIXL ratios."""
+
+    evidence = (
+        PROJECT_ROOT
+        / "outputs/metrics/real4gpu/online_smoke_real_pd_nixl_1p1d.csv"
+    )
+    if not evidence.is_file():
+        return False, f"missing evidence CSV: {evidence}"
+    try:
+        with evidence.open(newline="", encoding="utf-8") as handle:
+            rows = list(csv.DictReader(handle))
+    except (OSError, csv.Error) as exc:
+        return False, f"cannot read evidence CSV: {exc}"
+    for row in rows:
+        success = str(row.get("success", "")).strip().lower() in {"true", "1"}
+        try:
+            output_tokens = int(float(row.get("output_len_actual", "0")))
+            ttft_ms = float(row.get("ttft_ms", "nan"))
+        except (TypeError, ValueError):
+            continue
+        if (
+            success
+            and row.get("serving_mode") == "real_pd_nixl_1p1d"
+            and row.get("result_type") == "real_disaggregated_pd"
+            and row.get("connector") == "NixlConnector"
+            and output_tokens >= 1
+            and ttft_ms >= 0
+        ):
+            return True, str(evidence)
+    return False, f"no qualifying successful row in {evidence}"
 
 
 def module_available(name: str) -> bool:
@@ -202,6 +245,60 @@ def check_vllm_disagg_support(
     return report
 
 
+def check_nixl_lmcache_support(output_path: Path) -> dict[str, Any]:
+    """Discover native NIXL/LMCache support without importing CUDA modules."""
+
+    vllm_path = Path("/home/tjfeng/vllm")
+    nixl_connector = vllm_path / (
+        "vllm/distributed/kv_transfer/kv_connector/v1/nixl_connector.py"
+    )
+    native_examples = [
+        vllm_path / "docs/features/nixl_connector_usage.md",
+        vllm_path / "tests/v1/kv_connector/nixl_integration/run_accuracy_test.sh",
+        vllm_path / "tests/v1/kv_connector/nixl_integration/toy_proxy_server.py",
+    ]
+    lmcache_root = vllm_path / "examples/others/lmcache"
+    nixl_importable = module_available("nixl")
+    lmcache_importable = module_available("lmcache")
+    connector_found = nixl_connector.is_file()
+    nixl_examples_found = all(path.is_file() for path in native_examples)
+    lmcache_examples = sorted(
+        str(path.resolve()) for path in lmcache_root.rglob("*") if path.is_file()
+    ) if lmcache_root.is_dir() else []
+    if nixl_importable and connector_found:
+        next_step = "try_vllm_nixl_1p1d_smoke"
+    elif not nixl_importable and connector_found:
+        next_step = "create_isolated_env_and_install_nixl"
+    elif lmcache_examples and nixl_importable:
+        next_step = "create_isolated_env_and_install_lmcache_nixl"
+    else:
+        next_step = "skip_real_pd_use_simulator"
+    report = {
+        "checked_at_utc": datetime.now(timezone.utc).isoformat(),
+        "python": sys.executable,
+        "vllm_path": str(vllm_path),
+        "nixl_importable": nixl_importable,
+        "lmcache_importable": lmcache_importable,
+        "nixl_connector_found_in_vllm": connector_found,
+        "nixl_connector_path": str(nixl_connector),
+        "nixl_examples_found": nixl_examples_found,
+        "nixl_example_paths": [str(path) for path in native_examples if path.is_file()],
+        "lmcache_examples_found": bool(lmcache_examples),
+        "lmcache_example_paths": lmcache_examples[:100],
+        "recommended_next_step": next_step,
+    }
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    lines = ["NIXL / LMCache support check", "=" * 31]
+    for key, value in report.items():
+        rendered = (
+            json.dumps(value, ensure_ascii=False, sort_keys=True)
+            if isinstance(value, (bool, list, dict)) else str(value)
+        )
+        lines.append(f"{key}: {rendered}")
+    output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return report
+
+
 def common_server_args(
     config: dict[str, Any], port: int, tp: int, *, host: str = "127.0.0.1",
     gpu_memory_utilization: float | None = None,
@@ -236,9 +333,10 @@ def common_server_args(
 
 
 def pd_ratio(mode: str) -> tuple[int, int]:
-    token = mode.removeprefix("real_pd_").removesuffix("d")
-    p_text, d_text = token.split("p")
-    return int(p_text), int(d_text)
+    match = re.search(r"_(\d+)p(\d+)d$", mode)
+    if not match:
+        raise ValueError(f"cannot parse P:D ratio from mode: {mode}")
+    return int(match.group(1)), int(match.group(2))
 
 
 def build_p2p_nccl_plan(
@@ -320,10 +418,15 @@ def build_p2p_nccl_plan(
             "--trust-remote-code",
             "--kv-transfer-config", json.dumps(kv_config, separators=(",", ":")),
         ])
+        component_env = {"CUDA_VISIBLE_DEVICES": str(gpu)}
+        component_env.update({
+            str(key): str(value)
+            for key, value in (real_pd.get("nccl_env") or {}).items()
+        })
         return {
             "name": f"{role}_{index}", "gpu_ids": [gpu], "port": http_port,
             "kv_port": kv_port, "health_path": "/v1/models", "command": command,
-            "env": {"CUDA_VISIBLE_DEVICES": str(gpu)},
+            "env": component_env,
             "source_example": str(shell_example),
         }
 
@@ -344,48 +447,60 @@ def build_nixl_plan(
 ) -> list[dict[str, Any]]:
     """Secondary NIXL route; never selected while P2P NCCL is recommended."""
 
-    real_pd = config.get("real_pd", {})
-    side_base = int(real_pd.get("side_channel_port_base", 5600))
+    nixl = config.get("nixl", {})
+    side_base = int(nixl.get("side_channel_port_base", 5600))
     kv_cfg = json.dumps({
         "kv_connector": "NixlConnector", "kv_role": "kv_both",
-        "kv_buffer_device": real_pd.get("kv_buffer_device", "cuda"),
-        "kv_load_failure_policy": real_pd.get("kv_load_failure_policy", "fail"),
+        "kv_buffer_device": nixl.get("kv_buffer_device", "cuda"),
+        "kv_load_failure_policy": nixl.get("kv_load_failure_policy", "fail"),
     }, separators=(",", ":"))
     plan: list[dict[str, Any]] = []
+    common_env = {str(k): str(v) for k, v in (nixl.get("env") or {}).items()}
     for index in range(p_count):
-        cmd = common_server_args(config, p_ports[index], 1)
-        cmd.extend(["--kv-transfer-config", kv_cfg])
+        cmd = common_server_args(
+            config, p_ports[index], 1,
+            gpu_memory_utilization=float(nixl.get("gpu_memory_utilization", 0.85)),
+        )
+        cmd.extend([
+            "--enforce-eager", "--block-size", str(nixl.get("block_size", 128)),
+            "--kv-transfer-config", kv_cfg,
+        ])
+        env = dict(common_env)
+        env.update({
+            "CUDA_VISIBLE_DEVICES": str(gpu_ids[index]),
+            "VLLM_NIXL_SIDE_CHANNEL_PORT": str(side_base + index),
+        })
         plan.append({
             "name": f"prefill_{index}", "gpu_ids": [gpu_ids[index]],
             "port": p_ports[index], "health_path": "/v1/models", "command": cmd,
-            "env": {
-                "CUDA_VISIBLE_DEVICES": str(gpu_ids[index]),
-                "VLLM_NIXL_SIDE_CHANNEL_HOST": "127.0.0.1",
-                "VLLM_NIXL_SIDE_CHANNEL_PORT": str(side_base + index),
-                "UCX_NET_DEVICES": "all",
-            },
+            "env": env, "source_example": nixl.get("usage_guide"),
         })
     for index in range(d_count):
         gpu = gpu_ids[p_count + index]
-        cmd = common_server_args(config, d_ports[index], 1)
-        cmd.extend(["--kv-transfer-config", kv_cfg])
+        cmd = common_server_args(
+            config, d_ports[index], 1,
+            gpu_memory_utilization=float(nixl.get("gpu_memory_utilization", 0.85)),
+        )
+        cmd.extend([
+            "--enforce-eager", "--block-size", str(nixl.get("block_size", 128)),
+            "--kv-transfer-config", kv_cfg,
+        ])
+        env = dict(common_env)
+        env.update({
+            "CUDA_VISIBLE_DEVICES": str(gpu),
+            "VLLM_NIXL_SIDE_CHANNEL_PORT": str(side_base + p_count + index),
+        })
         plan.append({
             "name": f"decode_{index}", "gpu_ids": [gpu],
             "port": d_ports[index], "health_path": "/v1/models", "command": cmd,
-            "env": {
-                "CUDA_VISIBLE_DEVICES": str(gpu),
-                "VLLM_NIXL_SIDE_CHANNEL_HOST": "127.0.0.1",
-                "VLLM_NIXL_SIDE_CHANNEL_PORT": str(side_base + p_count + index),
-                "UCX_NET_DEVICES": "all",
-            },
+            "env": env, "source_example": nixl.get("usage_guide"),
         })
-    proxy = next(
-        (Path(path) for path in real_pd.get("proxy_script_candidates", []) if Path(path).is_file()),
-        None,
-    )
+    proxy = Path(nixl.get("proxy_script", ""))
     if proxy is None or "toy_proxy_server.py" not in proxy.name:
         raise RuntimeError("No compatible current-vLLM NIXL XpYd proxy was found")
-    proxy_port = int(config["ports"].get("pd_proxy", 10001))
+    if not proxy.is_file():
+        raise RuntimeError(f"NIXL proxy script is missing: {proxy}")
+    proxy_port = int(config["ports"].get("nixl_proxy", 8700))
     proxy_cmd = [
         sys.executable, str(proxy), "--host", "127.0.0.1", "--port", str(proxy_port),
         "--prefiller-hosts", *("127.0.0.1" for _ in p_ports),
@@ -396,7 +511,7 @@ def build_nixl_plan(
     plan.append({
         "name": "pd_proxy", "gpu_ids": [], "port": proxy_port,
         "health_path": "/healthcheck", "command": proxy_cmd, "env": {},
-        "start_after_servers": True,
+        "start_after_servers": True, "source_example": nixl.get("usage_guide"),
     })
     return plan
 
@@ -433,10 +548,16 @@ def build_launch_plan(
         return plan
 
     p_count, d_count = pd_ratio(mode)
-    if p_count + d_count != len(gpu_ids):
+    if mode.startswith("real_pd_nixl_") and p_count + d_count > len(gpu_ids):
+        raise ValueError(f"{mode} requires more than {len(gpu_ids)} GPUs")
+    if not mode.startswith("real_pd_nixl_") and p_count + d_count != len(gpu_ids):
         raise ValueError(f"{mode} requires {p_count + d_count} GPUs")
-    p_ports = [int(x) for x in ports["pd_prefill"][:p_count]]
-    d_ports = [int(x) for x in ports["pd_decode"][:d_count]]
+    if mode.startswith("real_pd_nixl_"):
+        p_ports = [int(x) for x in ports["nixl_prefill"][:p_count]]
+        d_ports = [int(x) for x in ports["nixl_decode"][:d_count]]
+    else:
+        p_ports = [int(x) for x in ports["pd_prefill"][:p_count]]
+        d_ports = [int(x) for x in ports["pd_decode"][:d_count]]
     if len(p_ports) != p_count or len(d_ports) != d_count:
         raise ValueError("insufficient PD ports in configuration")
     if recommended_route == "p2p_nccl_xpyd":
@@ -461,6 +582,7 @@ def stop_manifest_processes(log_dir: Path) -> None:
         print(f"No PID manifest found at {path}; nothing stopped.")
         return
     data = json.loads(path.read_text(encoding="utf-8"))
+    signaled: list[tuple[int, str]] = []
     for item in reversed(data.get("processes", [])):
         pid = int(item["pid"])
         try:
@@ -480,11 +602,29 @@ def stop_manifest_processes(log_dir: Path) -> None:
                 )
                 continue
             os.killpg(pid, signal.SIGTERM)
+            signaled.append((pid, item["name"]))
             print(f"Sent SIGTERM to process group {item['name']} (pgid={pid})")
         except (ProcessLookupError, FileNotFoundError):
             print(f"Process already exited: {item['name']} (pid={pid})")
         except PermissionError as exc:
             print(f"WARNING: cannot stop pid={pid}: {exc}", file=sys.stderr)
+    if signaled:
+        time.sleep(3)
+    for pid, name in signaled:
+        try:
+            os.kill(pid, 0)
+        except ProcessLookupError:
+            continue
+        try:
+            os.killpg(pid, signal.SIGKILL)
+            print(
+                f"Process group {name} did not exit after SIGTERM; sent SIGKILL "
+                f"(pgid={pid})"
+            )
+        except ProcessLookupError:
+            pass
+        except PermissionError as exc:
+            print(f"WARNING: cannot force-stop pid={pid}: {exc}", file=sys.stderr)
     stopped_path = log_dir / (
         f"server_processes.stopped.{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')}.json"
     )
@@ -633,10 +773,40 @@ def main() -> None:
     support = check_vllm_disagg_support(
         config, args.output_log_dir / "disagg_support_check.txt"
     )
+    nixl_support = check_nixl_lmcache_support(
+        args.output_log_dir / "nixl_support_check.txt"
+    )
     if args.check_disagg_support:
         print(json.dumps(support, indent=2))
         return
-    if args.mode.startswith("real_pd_"):
+    if args.check_nixl_support:
+        print(json.dumps(nixl_support, indent=2))
+        return
+    is_nixl_mode = args.mode.startswith("real_pd_nixl_")
+    if is_nixl_mode:
+        route = "nixl_connector"
+        if not args.dry_run and not nixl_support["nixl_importable"]:
+            raise RuntimeError(
+                "NIXL is not installed. No package was installed automatically; "
+                "create/approve the isolated vllm-nixl environment first."
+            )
+        if not args.dry_run and args.mode != "real_pd_nixl_1p1d":
+            smoke_verified, smoke_evidence = verified_nixl_1p1d_smoke()
+            if not smoke_verified:
+                raise RuntimeError(
+                    "Larger NIXL ratios require a verified 1P1D end-to-end smoke: "
+                    f"{smoke_evidence}"
+                )
+            print(f"VERIFIED_NIXL_1P1D_EVIDENCE={smoke_evidence}")
+        if not args.allow_experimental_pd and not args.dry_run:
+            raise RuntimeError("Pass --allow-experimental-pd true for NIXL smoke.")
+    elif args.mode.startswith("real_pd_"):
+        route = support["recommended_route"]
+        if not args.dry_run:
+            raise RuntimeError(
+                "P2pNcclConnector is retired as a formal real-PD route after a "
+                "measured KV data-plane failure. Use a real_pd_nixl_* mode."
+            )
         if support["recommended_route"] == "simulated_pd_fallback" and not args.dry_run:
             raise RuntimeError(
                 "No structural real-PD route was found. See disagg_support_check.txt; "
@@ -653,7 +823,9 @@ def main() -> None:
                 "Real PD is structurally available but not runtime validated. Re-run with "
                 "--allow-experimental-pd true after reviewing disagg_support_check.txt."
             )
-    plan = build_launch_plan(config, args.mode, support["recommended_route"])
+    else:
+        route = support["recommended_route"]
+    plan = build_launch_plan(config, args.mode, route)
     serializable_plan = {
         "mode": args.mode,
         "dry_run": args.dry_run,
@@ -666,13 +838,14 @@ def main() -> None:
     print(f"MODEL={config['model_name']}")
     print(f"PREFIX_CACHING_ENABLED={bool(config.get('enable_prefix_caching', False))}")
     if args.mode.startswith("real_pd_"):
-        p_count, _ = pd_ratio(args.mode)
+        p_count, d_count = pd_ratio(args.mode)
         gpu_ids = [int(x) for x in config["gpu_ids"]]
-        print(f"RECOMMENDED_ROUTE={support['recommended_route']}")
+        print(f"RECOMMENDED_ROUTE={route}")
         print(f"PREFILL_GPUS={gpu_ids[:p_count]}")
-        print(f"DECODE_GPUS={gpu_ids[p_count:]}")
-        print(f"PROXY_HTTP_PORT={config['ports']['pd_proxy']}")
-        if support["recommended_route"] == "p2p_nccl_xpyd":
+        print(f"DECODE_GPUS={gpu_ids[p_count:p_count + d_count]}")
+        proxy_key = "nixl_proxy" if is_nixl_mode else "pd_proxy"
+        print(f"PROXY_HTTP_PORT={config['ports'][proxy_key]}")
+        if route == "p2p_nccl_xpyd":
             print(f"PROXY_DISCOVERY_PORT={config['ports']['pd_discovery_proxy']}")
     for item in plan:
         env_prefix = " ".join(f"{key}={shlex.quote(value)}" for key, value in item["env"].items())

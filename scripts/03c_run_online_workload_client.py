@@ -29,10 +29,14 @@ VALID_MODES = (
     "real_pd_1p3d",
     "real_pd_2p2d",
     "real_pd_3p1d",
+    "real_pd_nixl_1p1d",
+    "real_pd_nixl_1p3d",
+    "real_pd_nixl_2p2d",
+    "real_pd_nixl_3p1d",
 )
 FIELDS = [
     "run_id", "request_id", "workload_name", "workload_mode", "request_type",
-    "serving_mode", "result_type", "route_target", "prompt_len_target",
+    "serving_mode", "result_type", "connector", "route_target", "prompt_len_target",
     "output_len_target", "prompt_len_actual", "output_len_actual", "arrival_rate",
     "concurrency", "arrival_time", "send_time", "ttft_ms", "tpot_ms",
     "total_latency_ms", "success", "error_msg", "prefix_caching_enabled",
@@ -119,6 +123,8 @@ def endpoints_for_mode(config: dict[str, Any], mode: str) -> list[str]:
         selected = ports["colocated"]
     elif mode == "aggregated_tp4":
         selected = [ports["aggregated_tp4"]]
+    elif mode.startswith("real_pd_nixl_"):
+        selected = [ports["nixl_proxy"]]
     else:
         selected = [ports.get("pd_proxy", 8500)]
     return [f"http://127.0.0.1:{int(port)}/v1/completions" for port in selected]
@@ -130,6 +136,14 @@ def result_type_for_mode(mode: str) -> str:
     if mode == "aggregated_tp4":
         return "real_aggregated_tp"
     return "real_disaggregated_pd"
+
+
+def connector_for_mode(mode: str) -> str:
+    if mode.startswith("real_pd_nixl_"):
+        return "NixlConnector"
+    if mode.startswith("real_pd_"):
+        return "P2pNcclConnector"
+    return ""
 
 
 def make_arrivals(
@@ -291,6 +305,7 @@ async def run_benchmark(
     semaphore = asyncio.Semaphore(args.concurrency)
     run_started = time.perf_counter()
     result_type = result_type_for_mode(args.mode)
+    connector = connector_for_mode(args.mode)
     timeout_s = args.request_timeout_s or float(config.get("request_timeout_s", 300))
 
     async def one(index: int) -> dict[str, Any]:
@@ -320,6 +335,7 @@ async def run_benchmark(
                     "workload_mode": request.get("workload_mode", "unknown"),
                     "request_type": request.get("request_type", "unknown"),
                     "serving_mode": args.mode, "result_type": result_type,
+                    "connector": connector,
                     "route_target": endpoint, "prompt_len_target": int(request["prompt_len"]),
                     "output_len_target": int(request["output_len"]),
                     "prompt_len_actual": result.prompt_tokens,
@@ -339,7 +355,12 @@ async def run_benchmark(
                     "workload_name": request.get("workload_name", "unknown"),
                     "workload_mode": request.get("workload_mode", "unknown"),
                     "request_type": request.get("request_type", "unknown"),
-                    "serving_mode": args.mode, "result_type": result_type,
+                    "serving_mode": args.mode,
+                    "result_type": (
+                        "measured_attempt_failed"
+                        if args.mode.startswith("real_pd_") else result_type
+                    ),
+                    "connector": connector,
                     "route_target": endpoint, "prompt_len_target": int(request["prompt_len"]),
                     "output_len_target": int(request["output_len"]),
                     "prompt_len_actual": None, "output_len_actual": None,

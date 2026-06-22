@@ -1,0 +1,952 @@
+(APIServer pid=1036296) INFO 06-22 01:55:11 [utils.py:299] 
+(APIServer pid=1036296) INFO 06-22 01:55:11 [utils.py:299]        █     █     █▄   ▄█
+(APIServer pid=1036296) INFO 06-22 01:55:11 [utils.py:299]  ▄▄ ▄█ █     █     █ ▀▄▀ █  version 0.18.1rc1.dev264+ge31915063
+(APIServer pid=1036296) INFO 06-22 01:55:11 [utils.py:299]   █▄█▀ █     █     █     █  model   meta-llama/Llama-3.1-8B-Instruct
+(APIServer pid=1036296) INFO 06-22 01:55:11 [utils.py:299]    ▀▀  ▀▀▀▀▀ ▀▀▀▀▀ ▀     ▀
+(APIServer pid=1036296) INFO 06-22 01:55:11 [utils.py:299] 
+(APIServer pid=1036296) INFO 06-22 01:55:11 [utils.py:233] non-default args: {'host': '127.0.0.1', 'port': 8602, 'model': 'meta-llama/Llama-3.1-8B-Instruct', 'dtype': 'float16', 'max_model_len': 8192, 'enforce_eager': True, 'block_size': 128, 'gpu_memory_utilization': 0.85, 'enable_prefix_caching': False, 'kv_transfer_config': KVTransferConfig(kv_connector='NixlConnector', engine_id='347353be-30d6-4fe6-ad61-b69ab3ccdc1f', kv_buffer_device='cuda', kv_buffer_size=1000000000.0, kv_role='kv_both', kv_rank=None, kv_parallel_size=1, kv_ip='127.0.0.1', kv_port=14579, kv_connector_extra_config={}, kv_connector_module_path=None, enable_permute_local_kv=False, kv_load_failure_policy='fail')}
+(APIServer pid=1036296) INFO 06-22 01:55:13 [model.py:549] Resolved architecture: LlamaForCausalLM
+(APIServer pid=1036296) WARNING 06-22 01:55:13 [model.py:2017] Casting torch.bfloat16 to torch.float16.
+(APIServer pid=1036296) INFO 06-22 01:55:13 [model.py:1679] Using max model len 8192
+(APIServer pid=1036296) INFO 06-22 01:55:13 [vllm.py:789] Asynchronous scheduling is enabled.
+(APIServer pid=1036296) WARNING 06-22 01:55:13 [vllm.py:847] Enforce eager set, disabling torch.compile and CUDAGraphs. This is equivalent to setting -cc.mode=none -cc.cudagraph_mode=none
+(APIServer pid=1036296) WARNING 06-22 01:55:13 [vllm.py:858] Inductor compilation was disabled by user settings, optimizations settings that are only active during inductor compilation will be ignored.
+(APIServer pid=1036296) INFO 06-22 01:55:14 [vllm.py:1024] Cudagraph is disabled under eager mode
+(APIServer pid=1036296) WARNING 06-22 01:55:14 [vllm.py:1231] Turning off hybrid kv cache manager because `--kv-transfer-config` is set. This will reduce the performance of vLLM on LLMs with sliding window attention or Mamba attention. If you are a developer of kv connector, please consider supporting hybrid kv cache manager for your connector by making sure your connector is a subclass of `SupportsHMA` defined in kv_connector/v1/base.py and use --no-disable-hybrid-kv-cache-manager to start vLLM.
+(APIServer pid=1036296) INFO 06-22 01:55:14 [compilation.py:290] Enabled custom fusions: norm_quant, act_quant
+(EngineCore pid=1042754) INFO 06-22 01:55:23 [core.py:105] Initializing a V1 LLM engine (v0.18.1rc1.dev264+ge31915063) with config: model='meta-llama/Llama-3.1-8B-Instruct', speculative_config=None, tokenizer='meta-llama/Llama-3.1-8B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.float16, max_seq_len=8192, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=None, enforce_eager=True, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=meta-llama/Llama-3.1-8B-Instruct, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.NONE: 0>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['all'], 'splitting_ops': [], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_images_per_batch': 0, 'compile_sizes': [], 'compile_ranges_endpoints': [2048], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.NONE: 0>, 'cudagraph_num_of_warmups': 0, 'cudagraph_capture_sizes': [], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': True, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 0, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore pid=1042754) INFO 06-22 01:55:25 [parallel_state.py:1400] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://172.16.120.221:42831 backend=nccl
+(EngineCore pid=1042754) INFO 06-22 01:55:25 [parallel_state.py:1716] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore pid=1042754) INFO 06-22 01:55:26 [gpu_model_runner.py:4738] Starting to load model meta-llama/Llama-3.1-8B-Instruct...
+(EngineCore pid=1042754) INFO 06-22 01:55:27 [cuda.py:334] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(EngineCore pid=1042754) INFO 06-22 01:55:27 [flash_attn.py:619] Using FlashAttention version 2
+(EngineCore pid=1042754) Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+(EngineCore pid=1042754) Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:02<00:07,  2.42s/it]
+(EngineCore pid=1042754) Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:05<00:05,  2.94s/it]
+(EngineCore pid=1042754) Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:08<00:02,  2.87s/it]
+(EngineCore pid=1042754) Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:09<00:00,  1.99s/it]
+(EngineCore pid=1042754) Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:09<00:00,  2.29s/it]
+(EngineCore pid=1042754) 
+(EngineCore pid=1042754) INFO 06-22 01:55:38 [default_loader.py:384] Loading weights took 9.21 seconds
+(EngineCore pid=1042754) INFO 06-22 01:55:39 [gpu_model_runner.py:4823] Model loading took 14.99 GiB memory and 11.800640 seconds
+(EngineCore pid=1042754) INFO 06-22 01:55:41 [gpu_worker.py:436] Available KV cache memory: 24.83 GiB
+(EngineCore pid=1042754) INFO 06-22 01:55:41 [kv_cache_utils.py:1319] GPU KV cache size: 203,392 tokens
+(EngineCore pid=1042754) INFO 06-22 01:55:41 [kv_cache_utils.py:1324] Maximum concurrency for 8,192 tokens per request: 24.83x
+(EngineCore pid=1042754) INFO 06-22 01:55:41 [nixl_connector.py:111] Setting UCX_RCACHE_MAX_UNRELEASED to '1024' to avoid a rare memory leak in UCX when using NIXL.
+(EngineCore pid=1042754) INFO 06-22 01:55:41 [nixl_connector.py:124] NIXL is available
+(EngineCore pid=1042754) INFO 06-22 01:55:41 [factory.py:64] Creating v1 connector with name: NixlConnector and engine_id: 347353be-30d6-4fe6-ad61-b69ab3ccdc1f
+(EngineCore pid=1042754) WARNING 06-22 01:55:41 [base.py:189] Initializing KVConnectorBase_V1. This API is experimental and subject to change in the future as we iterate the design.
+(EngineCore pid=1042754) INFO 06-22 01:55:41 [nixl_connector.py:1010] Initializing NIXL wrapper
+(EngineCore pid=1042754) INFO 06-22 01:55:41 [nixl_connector.py:1011] Initializing NIXL worker 347353be-30d6-4fe6-ad61-b69ab3ccdc1f
+(EngineCore pid=1042754) 2026-06-22 01:55:42 NIXL INFO    _api.py:390 Backend UCX was instantiated
+(EngineCore pid=1042754) 2026-06-22 01:55:42 NIXL INFO    _api.py:268 Initialized NIXL agent: e4b23084-bc57-44e9-ae09-56b30e150e20
+(EngineCore pid=1042754) INFO 06-22 01:55:42 [utils.py:74] `VLLM_KV_CACHE_LAYOUT` environment variable detected. Setting KV cache layout to HND.
+(EngineCore pid=1042754) INFO 06-22 01:55:42 [nixl_connector.py:1216] Detected attention backend FLASH_ATTN
+(EngineCore pid=1042754) INFO 06-22 01:55:42 [nixl_connector.py:1217] Detected kv cache layout HND
+(EngineCore pid=1042754) INFO 06-22 01:55:42 [nixl_connector.py:1580] Registering KV_Caches. use_mla: False, kv_buffer_device: cuda, use_host_buffer: False
+(EngineCore pid=1042754) INFO 06-22 01:55:42 [core.py:283] init engine (profile, create kv cache, warmup model) took 3.06 seconds
+(EngineCore pid=1042754) INFO 06-22 01:55:44 [factory.py:64] Creating v1 connector with name: NixlConnector and engine_id: 347353be-30d6-4fe6-ad61-b69ab3ccdc1f
+(EngineCore pid=1042754) WARNING 06-22 01:55:44 [base.py:189] Initializing KVConnectorBase_V1. This API is experimental and subject to change in the future as we iterate the design.
+(EngineCore pid=1042754) INFO 06-22 01:55:44 [nixl_connector.py:581] Initializing NIXL Scheduler 347353be-30d6-4fe6-ad61-b69ab3ccdc1f
+(EngineCore pid=1042754) INFO 06-22 01:55:44 [nixl_connector.py:583] Hybrid Memory Allocator is enabled with NIXL
+(EngineCore pid=1042754) INFO 06-22 01:55:44 [vllm.py:789] Asynchronous scheduling is enabled.
+(EngineCore pid=1042754) WARNING 06-22 01:55:44 [vllm.py:847] Enforce eager set, disabling torch.compile and CUDAGraphs. This is equivalent to setting -cc.mode=none -cc.cudagraph_mode=none
+(EngineCore pid=1042754) WARNING 06-22 01:55:44 [vllm.py:858] Inductor compilation was disabled by user settings, optimizations settings that are only active during inductor compilation will be ignored.
+(EngineCore pid=1042754) INFO 06-22 01:55:44 [vllm.py:1024] Cudagraph is disabled under eager mode
+(EngineCore pid=1042754) INFO 06-22 01:55:44 [compilation.py:290] Enabled custom fusions: norm_quant, act_quant
+(APIServer pid=1036296) INFO 06-22 01:55:45 [nixl_connector.py:111] Setting UCX_RCACHE_MAX_UNRELEASED to '1024' to avoid a rare memory leak in UCX when using NIXL.
+(APIServer pid=1036296) INFO 06-22 01:55:45 [nixl_connector.py:124] NIXL is available
+(APIServer pid=1036296) INFO 06-22 01:55:45 [api_server.py:590] Supported tasks: ['generate']
+(APIServer pid=1036296) WARNING 06-22 01:55:45 [model.py:1436] Default vLLM sampling parameters have been overridden by the model's `generation_config.json`: `{'temperature': 0.6, 'top_p': 0.9}`. If this is not intended, please relaunch vLLM instance with `--generation-config vllm`.
+(APIServer pid=1036296) INFO 06-22 01:55:50 [hf.py:314] Detected the chat template content format to be 'string'. You can set `--chat-template-content-format` to override this.
+(APIServer pid=1036296) INFO 06-22 01:55:51 [api_server.py:594] Starting vLLM server on http://127.0.0.1:8602
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:37] Available routes are:
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /openapi.json, Methods: HEAD, GET
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /docs, Methods: HEAD, GET
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /docs/oauth2-redirect, Methods: HEAD, GET
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /redoc, Methods: HEAD, GET
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /tokenize, Methods: POST
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /detokenize, Methods: POST
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /load, Methods: GET
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /version, Methods: GET
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /health, Methods: GET
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /metrics, Methods: GET
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /v1/models, Methods: GET
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /ping, Methods: GET
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /ping, Methods: POST
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /invocations, Methods: POST
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /v1/chat/completions, Methods: POST
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /v1/chat/completions/batch, Methods: POST
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /v1/responses, Methods: POST
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /v1/responses/{response_id}, Methods: GET
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /v1/responses/{response_id}/cancel, Methods: POST
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /v1/completions, Methods: POST
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /v1/messages, Methods: POST
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /v1/messages/count_tokens, Methods: POST
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /inference/v1/generate, Methods: POST
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /scale_elastic_ep, Methods: POST
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /is_scaling_elastic_ep, Methods: POST
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /v1/chat/completions/render, Methods: POST
+(APIServer pid=1036296) INFO 06-22 01:55:51 [launcher.py:46] Route: /v1/completions/render, Methods: POST
+(APIServer pid=1036296) INFO:     Started server process [1036296]
+(APIServer pid=1036296) INFO:     Waiting for application startup.
+(APIServer pid=1036296) INFO:     Application startup complete.
+(APIServer pid=1036296) INFO:     127.0.0.1:35392 - "GET /v1/models HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41098 - "POST /v1/completions HTTP/1.1" 200 OK
+(EngineCore pid=1042754) INFO 06-22 01:56:15 [nixl_connector.py:1339] NIXL compatibility check passed (hash: 9669f52069a81423a7b3ec3363c613fdde9d90136c76a44274dbec7f4ef77cef)
+(APIServer pid=1036296) INFO 06-22 01:56:21 [loggers.py:259] Engine 000: Avg prompt throughput: 0.1 tokens/s, Avg generation throughput: 6.4 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:56:21 [metrics.py:103] KV Transfer metrics: Num successful transfers=1, Avg xfer time (ms)=908.136, P90 xfer time (ms)=908.136, Avg post time (ms)=1.323, P90 post time (ms)=1.323, Avg MB per transfer=512.0, Throughput (MB/s)=563.792, Avg number of descriptors=64.0
+(APIServer pid=1036296) INFO:     127.0.0.1:47638 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49214 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:56:31 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 26.7 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.4%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:56:31 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=364.975, P90 xfer time (ms)=795.76, Avg post time (ms)=2.643, P90 post time (ms)=3.887, Avg MB per transfer=106.667, Throughput (MB/s)=292.257, Avg number of descriptors=64.0
+(APIServer pid=1036296) INFO:     127.0.0.1:47638 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49222 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:56:41 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 107.7 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.6%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:56:41 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=410.704, P90 xfer time (ms)=721.348, Avg post time (ms)=3.46, P90 post time (ms)=6.867, Avg MB per transfer=208.0, Throughput (MB/s)=506.447, Avg number of descriptors=64.0
+(APIServer pid=1036296) INFO:     127.0.0.1:47638 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47638 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:33232 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:56:51 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 63.8 tokens/s, Running: 3 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.6%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:56:51 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=985.129, P90 xfer time (ms)=1791.298, Avg post time (ms)=8.704, P90 post time (ms)=19.652, Avg MB per transfer=144.0, Throughput (MB/s)=146.174, Avg number of descriptors=64.0
+(APIServer pid=1036296) INFO:     127.0.0.1:33232 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:57:01 [loggers.py:259] Engine 000: Avg prompt throughput: 0.2 tokens/s, Avg generation throughput: 97.2 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.2%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:57:01 [metrics.py:103] KV Transfer metrics: Num successful transfers=2, Avg xfer time (ms)=673.322, P90 xfer time (ms)=1162.928, Avg post time (ms)=3.324, P90 post time (ms)=5.679, Avg MB per transfer=32.0, Throughput (MB/s)=47.526, Avg number of descriptors=64.0
+(APIServer pid=1036296) INFO:     127.0.0.1:47638 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44898 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47638 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44908 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44924 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:57:11 [loggers.py:259] Engine 000: Avg prompt throughput: 0.5 tokens/s, Avg generation throughput: 123.3 tokens/s, Running: 5 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.3%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:57:11 [metrics.py:103] KV Transfer metrics: Num successful transfers=5, Avg xfer time (ms)=287.52, P90 xfer time (ms)=665.802, Avg post time (ms)=3.624, P90 post time (ms)=6.52, Avg MB per transfer=76.8, Throughput (MB/s)=267.112, Avg number of descriptors=64.0
+(APIServer pid=1036296) INFO:     127.0.0.1:33760 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:33760 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:57:21 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 185.1 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.5%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:57:21 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=474.316, P90 xfer time (ms)=856.33, Avg post time (ms)=9.822, P90 post time (ms)=19.783, Avg MB per transfer=106.667, Throughput (MB/s)=224.885, Avg number of descriptors=64.0
+(APIServer pid=1036296) INFO:     127.0.0.1:47638 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52622 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52634 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:57:31 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 119.5 tokens/s, Running: 3 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.8%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:57:31 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=229.82, P90 xfer time (ms)=539.96, Avg post time (ms)=15.942, P90 post time (ms)=29.649, Avg MB per transfer=88.0, Throughput (MB/s)=382.908, Avg number of descriptors=64.0
+(APIServer pid=1036296) INFO:     127.0.0.1:52634 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47638 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:57:41 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 110.5 tokens/s, Running: 3 reqs, Waiting: 0 reqs, GPU KV cache usage: 2.6%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:57:41 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=659.87, P90 xfer time (ms)=1205.049, Avg post time (ms)=9.05, P90 post time (ms)=17.235, Avg MB per transfer=192.0, Throughput (MB/s)=290.967, Avg number of descriptors=64.0
+(APIServer pid=1036296) INFO:     127.0.0.1:47638 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52634 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:59460 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:57:51 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 107.7 tokens/s, Running: 4 reqs, Waiting: 0 reqs, GPU KV cache usage: 2.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:57:51 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=177.684, P90 xfer time (ms)=346.903, Avg post time (ms)=11.018, P90 post time (ms)=19.87, Avg MB per transfer=106.667, Throughput (MB/s)=600.317, Avg number of descriptors=64.0
+(APIServer pid=1036296) INFO:     127.0.0.1:47652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:59460 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:58:01 [loggers.py:259] Engine 000: Avg prompt throughput: 0.2 tokens/s, Avg generation throughput: 79.6 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.4%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:58:01 [metrics.py:103] KV Transfer metrics: Num successful transfers=2, Avg xfer time (ms)=844.148, P90 xfer time (ms)=875.607, Avg post time (ms)=12.712, P90 post time (ms)=21.454, Avg MB per transfer=512.0, Throughput (MB/s)=606.529, Avg number of descriptors=64.0
+(APIServer pid=1036296) INFO:     127.0.0.1:52634 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:40308 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:40310 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:40308 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:58:11 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 47.7 tokens/s, Running: 3 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.7%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:58:11 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=145.616, P90 xfer time (ms)=305.516, Avg post time (ms)=11.117, P90 post time (ms)=20.578, Avg MB per transfer=88.0, Throughput (MB/s)=604.328, Avg number of descriptors=64.0
+(APIServer pid=1036296) INFO:     127.0.0.1:52634 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:40308 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:58:21 [loggers.py:259] Engine 000: Avg prompt throughput: 0.2 tokens/s, Avg generation throughput: 117.4 tokens/s, Running: 3 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.8%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:58:21 [metrics.py:103] KV Transfer metrics: Num successful transfers=2, Avg xfer time (ms)=59.368, P90 xfer time (ms)=62.006, Avg post time (ms)=9.253, P90 post time (ms)=9.287, Avg MB per transfer=32.0, Throughput (MB/s)=539.015, Avg number of descriptors=64.0
+(APIServer pid=1036296) INFO:     127.0.0.1:40310 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:40308 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:42430 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52634 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:58:31 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 107.6 tokens/s, Running: 2 reqs, Waiting: 1 reqs, GPU KV cache usage: 0.6%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:58:31 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=494.738, P90 xfer time (ms)=783.283, Avg post time (ms)=2.517, P90 post time (ms)=5.638, Avg MB per transfer=32.0, Throughput (MB/s)=64.681, Avg number of descriptors=64.0
+(APIServer pid=1036296) INFO:     127.0.0.1:40310 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:42430 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:58:41 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 110.6 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.6%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:58:41 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=541.421, P90 xfer time (ms)=1038.995, Avg post time (ms)=4.627, P90 post time (ms)=7.796, Avg MB per transfer=32.0, Throughput (MB/s)=59.104, Avg number of descriptors=64.0
+(APIServer pid=1036296) INFO:     127.0.0.1:52634 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:42430 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52634 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52634 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:40310 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:58:51 [loggers.py:259] Engine 000: Avg prompt throughput: 0.5 tokens/s, Avg generation throughput: 84.0 tokens/s, Running: 3 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.7%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:58:51 [metrics.py:103] KV Transfer metrics: Num successful transfers=5, Avg xfer time (ms)=279.211, P90 xfer time (ms)=654.104, Avg post time (ms)=19.44, P90 post time (ms)=24.078, Avg MB per transfer=172.8, Throughput (MB/s)=618.888, Avg number of descriptors=64.0
+(APIServer pid=1036296) INFO:     127.0.0.1:41158 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52634 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:59:01 [loggers.py:259] Engine 000: Avg prompt throughput: 0.2 tokens/s, Avg generation throughput: 92.6 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.6%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:59:01 [metrics.py:103] KV Transfer metrics: Num successful transfers=2, Avg xfer time (ms)=439.955, P90 xfer time (ms)=469.819, Avg post time (ms)=11.539, P90 post time (ms)=20.27, Avg MB per transfer=144.0, Throughput (MB/s)=327.306, Avg number of descriptors=64.0
+(APIServer pid=1036296) INFO:     127.0.0.1:41316 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41322 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:40310 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41316 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:59410 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:59:11 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 122.4 tokens/s, Running: 4 reqs, Waiting: 1 reqs, GPU KV cache usage: 4.1%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:59:11 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=749.618, P90 xfer time (ms)=1192.899, Avg post time (ms)=8.154, P90 post time (ms)=15.89, Avg MB per transfer=272.0, Throughput (MB/s)=362.852, Avg number of descriptors=64.0
+(APIServer pid=1036296) INFO:     127.0.0.1:52634 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:40310 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41322 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:40310 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:59:21 [loggers.py:259] Engine 000: Avg prompt throughput: 0.5 tokens/s, Avg generation throughput: 113.7 tokens/s, Running: 3 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.7%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:59:21 [metrics.py:103] KV Transfer metrics: Num successful transfers=5, Avg xfer time (ms)=387.748, P90 xfer time (ms)=1034.767, Avg post time (ms)=17.8, P90 post time (ms)=34.054, Avg MB per transfer=172.8, Throughput (MB/s)=445.65, Avg number of descriptors=499.2
+(APIServer pid=1036296) INFO:     127.0.0.1:52634 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:40732 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:40732 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:59:31 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 128.0 tokens/s, Running: 3 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.8%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:59:31 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=51.481, P90 xfer time (ms)=62.303, Avg post time (ms)=7.229, P90 post time (ms)=11.214, Avg MB per transfer=106.667, Throughput (MB/s)=2071.962, Avg number of descriptors=426.7
+(APIServer pid=1036296) INFO:     127.0.0.1:41322 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52634 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:48152 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 01:59:41 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 130.5 tokens/s, Running: 4 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.3%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 01:59:41 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=67.495, P90 xfer time (ms)=81.578, Avg post time (ms)=14.183, P90 post time (ms)=20.888, Avg MB per transfer=32.0, Throughput (MB/s)=474.112, Avg number of descriptors=128.0
+(APIServer pid=1036296) INFO 06-22 01:59:51 [loggers.py:259] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 55.4 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:00:01 [loggers.py:259] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 0.0 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO:     127.0.0.1:35156 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:00:11 [loggers.py:259] Engine 000: Avg prompt throughput: 0.1 tokens/s, Avg generation throughput: 25.6 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:00:11 [metrics.py:103] KV Transfer metrics: Num successful transfers=1, Avg xfer time (ms)=72.382, P90 xfer time (ms)=72.382, Avg post time (ms)=24.377, P90 post time (ms)=24.377, Avg MB per transfer=32.0, Throughput (MB/s)=442.099, Avg number of descriptors=128.0
+(APIServer pid=1036296) INFO:     127.0.0.1:35156 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:00:21 [loggers.py:259] Engine 000: Avg prompt throughput: 0.1 tokens/s, Avg generation throughput: 25.6 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:00:21 [metrics.py:103] KV Transfer metrics: Num successful transfers=1, Avg xfer time (ms)=54.001, P90 xfer time (ms)=54.001, Avg post time (ms)=6.92, P90 post time (ms)=6.92, Avg MB per transfer=32.0, Throughput (MB/s)=592.582, Avg number of descriptors=128.0
+(APIServer pid=1036296) INFO:     127.0.0.1:35156 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49408 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49414 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:35156 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49426 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49442 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49458 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49474 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49488 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49496 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:38320 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:38328 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49426 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:00:31 [loggers.py:259] Engine 000: Avg prompt throughput: 1.5 tokens/s, Avg generation throughput: 267.4 tokens/s, Running: 12 reqs, Waiting: 0 reqs, GPU KV cache usage: 4.9%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:00:31 [metrics.py:103] KV Transfer metrics: Num successful transfers=15, Avg xfer time (ms)=115.71, P90 xfer time (ms)=260.134, Avg post time (ms)=7.23, P90 post time (ms)=18.824, Avg MB per transfer=96.0, Throughput (MB/s)=829.663, Avg number of descriptors=384.0
+(APIServer pid=1036296) INFO:     127.0.0.1:38342 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:38320 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:38348 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49488 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49408 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49414 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:35156 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49426 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49442 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49458 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49426 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:00:41 [loggers.py:259] Engine 000: Avg prompt throughput: 1.2 tokens/s, Avg generation throughput: 436.9 tokens/s, Running: 9 reqs, Waiting: 0 reqs, GPU KV cache usage: 6.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:00:41 [metrics.py:103] KV Transfer metrics: Num successful transfers=12, Avg xfer time (ms)=62.815, P90 xfer time (ms)=116.34, Avg post time (ms)=13.478, P90 post time (ms)=24.823, Avg MB per transfer=210.667, Throughput (MB/s)=3353.741, Avg number of descriptors=842.7
+(APIServer pid=1036296) INFO:     127.0.0.1:49458 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49474 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49414 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:35156 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49426 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49442 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49458 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:38320 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49408 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49426 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49408 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:00:51 [loggers.py:259] Engine 000: Avg prompt throughput: 1.2 tokens/s, Avg generation throughput: 295.0 tokens/s, Running: 8 reqs, Waiting: 0 reqs, GPU KV cache usage: 3.8%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:00:51 [metrics.py:103] KV Transfer metrics: Num successful transfers=12, Avg xfer time (ms)=106.492, P90 xfer time (ms)=208.482, Avg post time (ms)=6.343, P90 post time (ms)=17.284, Avg MB per transfer=192.0, Throughput (MB/s)=1802.945, Avg number of descriptors=768.0
+(APIServer pid=1036296) INFO:     127.0.0.1:49412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49414 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49408 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49442 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49408 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49458 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41588 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49442 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49408 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:35156 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49474 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:38320 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:01:01 [loggers.py:259] Engine 000: Avg prompt throughput: 1.1 tokens/s, Avg generation throughput: 317.6 tokens/s, Running: 8 reqs, Waiting: 2 reqs, GPU KV cache usage: 5.1%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:01:01 [metrics.py:103] KV Transfer metrics: Num successful transfers=11, Avg xfer time (ms)=66.988, P90 xfer time (ms)=82.684, Avg post time (ms)=11.873, P90 post time (ms)=16.292, Avg MB per transfer=139.636, Throughput (MB/s)=2084.509, Avg number of descriptors=552.7
+(APIServer pid=1036296) INFO:     127.0.0.1:44968 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44980 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49426 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49408 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49474 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41588 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49414 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:38320 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49408 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49442 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49458 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:01:11 [loggers.py:259] Engine 000: Avg prompt throughput: 1.0 tokens/s, Avg generation throughput: 320.7 tokens/s, Running: 8 reqs, Waiting: 3 reqs, GPU KV cache usage: 4.6%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:01:11 [metrics.py:103] KV Transfer metrics: Num successful transfers=10, Avg xfer time (ms)=2331.725, P90 xfer time (ms)=3313.127, Avg post time (ms)=0.48, P90 post time (ms)=0.665, Avg MB per transfer=150.4, Throughput (MB/s)=64.502, Avg number of descriptors=121.6
+(APIServer pid=1036296) INFO:     127.0.0.1:35156 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49414 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:01:21 [loggers.py:259] Engine 000: Avg prompt throughput: 0.6 tokens/s, Avg generation throughput: 298.7 tokens/s, Running: 4 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.3%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:01:21 [metrics.py:103] KV Transfer metrics: Num successful transfers=6, Avg xfer time (ms)=2356.444, P90 xfer time (ms)=3915.854, Avg post time (ms)=4.94, P90 post time (ms)=14.121, Avg MB per transfer=192.0, Throughput (MB/s)=81.479, Avg number of descriptors=149.3
+(APIServer pid=1036296) INFO 06-22 02:01:31 [loggers.py:259] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 77.6 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO:     127.0.0.1:55232 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:01:41 [loggers.py:259] Engine 000: Avg prompt throughput: 0.1 tokens/s, Avg generation throughput: 25.6 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:01:41 [metrics.py:103] KV Transfer metrics: Num successful transfers=1, Avg xfer time (ms)=53.512, P90 xfer time (ms)=53.512, Avg post time (ms)=2.538, P90 post time (ms)=2.538, Avg MB per transfer=32.0, Throughput (MB/s)=597.997, Avg number of descriptors=128.0
+(APIServer pid=1036296) INFO:     127.0.0.1:35268 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:01:51 [loggers.py:259] Engine 000: Avg prompt throughput: 0.1 tokens/s, Avg generation throughput: 6.4 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:01:51 [metrics.py:103] KV Transfer metrics: Num successful transfers=1, Avg xfer time (ms)=16.561, P90 xfer time (ms)=16.561, Avg post time (ms)=8.221, P90 post time (ms)=8.221, Avg MB per transfer=256.0, Throughput (MB/s)=15458.004, Avg number of descriptors=1024.0
+(APIServer pid=1036296) INFO:     127.0.0.1:53638 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53660 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53670 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53680 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53688 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:35822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53660 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:02:01 [loggers.py:259] Engine 000: Avg prompt throughput: 0.7 tokens/s, Avg generation throughput: 61.2 tokens/s, Running: 5 reqs, Waiting: 1 reqs, GPU KV cache usage: 3.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:02:01 [metrics.py:103] KV Transfer metrics: Num successful transfers=7, Avg xfer time (ms)=270.143, P90 xfer time (ms)=634.176, Avg post time (ms)=6.97, P90 post time (ms)=18.726, Avg MB per transfer=132.571, Throughput (MB/s)=490.746, Avg number of descriptors=530.3
+(APIServer pid=1036296) INFO:     127.0.0.1:53688 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:35828 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:35842 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:35856 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53638 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53660 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:35828 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53680 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:35856 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:35842 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41616 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:02:11 [loggers.py:259] Engine 000: Avg prompt throughput: 1.3 tokens/s, Avg generation throughput: 349.5 tokens/s, Running: 9 reqs, Waiting: 0 reqs, GPU KV cache usage: 2.6%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:02:11 [metrics.py:103] KV Transfer metrics: Num successful transfers=13, Avg xfer time (ms)=151.164, P90 xfer time (ms)=212.606, Avg post time (ms)=7.379, P90 post time (ms)=17.83, Avg MB per transfer=179.692, Throughput (MB/s)=1188.728, Avg number of descriptors=718.8
+(APIServer pid=1036296) INFO:     127.0.0.1:53660 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53670 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:35822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53680 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53670 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53688 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53638 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:35828 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53660 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53688 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:35822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53680 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:58070 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:58082 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:02:21 [loggers.py:259] Engine 000: Avg prompt throughput: 1.6 tokens/s, Avg generation throughput: 327.3 tokens/s, Running: 11 reqs, Waiting: 0 reqs, GPU KV cache usage: 3.5%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:02:21 [metrics.py:103] KV Transfer metrics: Num successful transfers=16, Avg xfer time (ms)=81.246, P90 xfer time (ms)=154.364, Avg post time (ms)=5.304, P90 post time (ms)=9.569, Avg MB per transfer=88.0, Throughput (MB/s)=1083.136, Avg number of descriptors=352.0
+(APIServer pid=1036296) INFO:     127.0.0.1:53680 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41616 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:35828 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:58086 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53688 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:58086 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53680 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53638 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53670 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:02:31 [loggers.py:259] Engine 000: Avg prompt throughput: 1.0 tokens/s, Avg generation throughput: 422.7 tokens/s, Running: 11 reqs, Waiting: 1 reqs, GPU KV cache usage: 4.1%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:02:31 [metrics.py:103] KV Transfer metrics: Num successful transfers=10, Avg xfer time (ms)=56.218, P90 xfer time (ms)=70.01, Avg post time (ms)=9.931, P90 post time (ms)=16.108, Avg MB per transfer=150.4, Throughput (MB/s)=2675.3, Avg number of descriptors=601.6
+(APIServer pid=1036296) INFO:     127.0.0.1:53660 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:42324 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:35822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53680 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:58070 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53670 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53652 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:35822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53670 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53688 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:35828 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:02:41 [loggers.py:259] Engine 000: Avg prompt throughput: 1.5 tokens/s, Avg generation throughput: 392.2 tokens/s, Running: 11 reqs, Waiting: 0 reqs, GPU KV cache usage: 3.7%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:02:41 [metrics.py:103] KV Transfer metrics: Num successful transfers=15, Avg xfer time (ms)=77.69, P90 xfer time (ms)=160.884, Avg post time (ms)=5.258, P90 post time (ms)=12.604, Avg MB per transfer=155.733, Throughput (MB/s)=2004.56, Avg number of descriptors=622.9
+(APIServer pid=1036296) INFO:     127.0.0.1:53688 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:58086 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53638 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:50126 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53660 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53638 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:02:51 [loggers.py:259] Engine 000: Avg prompt throughput: 0.6 tokens/s, Avg generation throughput: 314.6 tokens/s, Running: 4 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.2%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:02:51 [metrics.py:103] KV Transfer metrics: Num successful transfers=6, Avg xfer time (ms)=67.33, P90 xfer time (ms)=103.21, Avg post time (ms)=8.839, P90 post time (ms)=14.991, Avg MB per transfer=272.0, Throughput (MB/s)=4039.814, Avg number of descriptors=1088.0
+(APIServer pid=1036296) INFO 06-22 02:03:01 [loggers.py:259] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 34.0 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:03:11 [loggers.py:259] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 0.0 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO:     127.0.0.1:47192 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47192 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:03:21 [loggers.py:259] Engine 000: Avg prompt throughput: 0.2 tokens/s, Avg generation throughput: 11.0 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.1%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:03:21 [metrics.py:103] KV Transfer metrics: Num successful transfers=2, Avg xfer time (ms)=33.046, P90 xfer time (ms)=46.057, Avg post time (ms)=20.218, P90 post time (ms)=30.768, Avg MB per transfer=384.0, Throughput (MB/s)=11619.99, Avg number of descriptors=1536.0
+(APIServer pid=1036296) INFO:     127.0.0.1:47192 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47192 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47192 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:33692 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47192 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:03:31 [loggers.py:259] Engine 000: Avg prompt throughput: 0.5 tokens/s, Avg generation throughput: 43.4 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.4%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:03:31 [metrics.py:103] KV Transfer metrics: Num successful transfers=5, Avg xfer time (ms)=33.428, P90 xfer time (ms)=60.047, Avg post time (ms)=7.944, P90 post time (ms)=11.366, Avg MB per transfer=166.4, Throughput (MB/s)=4977.863, Avg number of descriptors=665.6
+(APIServer pid=1036296) INFO:     127.0.0.1:37780 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:37780 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:37794 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41840 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:03:41 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 137.7 tokens/s, Running: 4 reqs, Waiting: 0 reqs, GPU KV cache usage: 2.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:03:41 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=53.364, P90 xfer time (ms)=78.709, Avg post time (ms)=7.298, P90 post time (ms)=13.72, Avg MB per transfer=208.0, Throughput (MB/s)=3897.741, Avg number of descriptors=832.0
+(APIServer pid=1036296) INFO:     127.0.0.1:47192 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:37794 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:03:51 [loggers.py:259] Engine 000: Avg prompt throughput: 0.2 tokens/s, Avg generation throughput: 76.8 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.3%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:03:51 [metrics.py:103] KV Transfer metrics: Num successful transfers=2, Avg xfer time (ms)=60.14, P90 xfer time (ms)=61.3, Avg post time (ms)=10.18, P90 post time (ms)=10.637, Avg MB per transfer=32.0, Throughput (MB/s)=532.096, Avg number of descriptors=128.0
+(APIServer pid=1036296) INFO:     127.0.0.1:47192 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47192 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47192 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:56154 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:37794 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:04:01 [loggers.py:259] Engine 000: Avg prompt throughput: 0.5 tokens/s, Avg generation throughput: 72.5 tokens/s, Running: 3 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.6%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:04:01 [metrics.py:103] KV Transfer metrics: Num successful transfers=5, Avg xfer time (ms)=49.462, P90 xfer time (ms)=73.758, Avg post time (ms)=10.603, P90 post time (ms)=17.55, Avg MB per transfer=121.6, Throughput (MB/s)=2458.453, Avg number of descriptors=486.4
+(APIServer pid=1036296) INFO:     127.0.0.1:51084 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47192 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:51084 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:51084 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:04:11 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 141.7 tokens/s, Running: 3 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.9%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:04:11 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=50.447, P90 xfer time (ms)=73.228, Avg post time (ms)=7.481, P90 post time (ms)=11.246, Avg MB per transfer=144.0, Throughput (MB/s)=2854.481, Avg number of descriptors=576.0
+(APIServer pid=1036296) INFO:     127.0.0.1:47192 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52444 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:04:22 [loggers.py:259] Engine 000: Avg prompt throughput: 0.2 tokens/s, Avg generation throughput: 73.2 tokens/s, Running: 3 reqs, Waiting: 0 reqs, GPU KV cache usage: 2.7%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:04:22 [metrics.py:103] KV Transfer metrics: Num successful transfers=2, Avg xfer time (ms)=51.44, P90 xfer time (ms)=62.031, Avg post time (ms)=17.556, P90 post time (ms)=18.756, Avg MB per transfer=272.0, Throughput (MB/s)=5287.765, Avg number of descriptors=1088.0
+(APIServer pid=1036296) INFO:     127.0.0.1:52446 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47192 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52446 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47192 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:04:32 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 55.4 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.4%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:04:32 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=50.572, P90 xfer time (ms)=60.723, Avg post time (ms)=7.748, P90 post time (ms)=12.648, Avg MB per transfer=88.0, Throughput (MB/s)=1740.093, Avg number of descriptors=352.0
+(APIServer pid=1036296) INFO:     127.0.0.1:55994 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:55994 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:04:42 [loggers.py:259] Engine 000: Avg prompt throughput: 0.2 tokens/s, Avg generation throughput: 105.0 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.6%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:04:42 [metrics.py:103] KV Transfer metrics: Num successful transfers=2, Avg xfer time (ms)=52.954, P90 xfer time (ms)=59.395, Avg post time (ms)=8.14, P90 post time (ms)=10.203, Avg MB per transfer=272.0, Throughput (MB/s)=5136.534, Avg number of descriptors=1088.0
+(APIServer pid=1036296) INFO:     127.0.0.1:52446 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47192 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52446 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47192 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:04:52 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 78.4 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.3%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:04:52 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=49.021, P90 xfer time (ms)=69.645, Avg post time (ms)=12.808, P90 post time (ms)=17.572, Avg MB per transfer=328.0, Throughput (MB/s)=6691.044, Avg number of descriptors=1312.0
+(APIServer pid=1036296) INFO:     127.0.0.1:38524 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52446 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:05:02 [loggers.py:259] Engine 000: Avg prompt throughput: 0.2 tokens/s, Avg generation throughput: 50.0 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.3%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:05:02 [metrics.py:103] KV Transfer metrics: Num successful transfers=2, Avg xfer time (ms)=46.105, P90 xfer time (ms)=56.601, Avg post time (ms)=13.069, P90 post time (ms)=13.323, Avg MB per transfer=144.0, Throughput (MB/s)=3123.305, Avg number of descriptors=576.0
+(APIServer pid=1036296) INFO:     127.0.0.1:52446 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:46084 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:38524 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:05:12 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 76.3 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.4%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:05:12 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=43.744, P90 xfer time (ms)=68.886, Avg post time (ms)=6.783, P90 post time (ms)=9.55, Avg MB per transfer=181.333, Throughput (MB/s)=4145.299, Avg number of descriptors=725.3
+(APIServer pid=1036296) INFO:     127.0.0.1:42644 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:38524 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:38524 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:05:22 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 50.1 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.2%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:05:22 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=44.898, P90 xfer time (ms)=62.734, Avg post time (ms)=10.179, P90 post time (ms)=14.574, Avg MB per transfer=266.667, Throughput (MB/s)=5939.389, Avg number of descriptors=1066.7
+(APIServer pid=1036296) INFO:     127.0.0.1:42412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:42418 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:42412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:57208 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:05:32 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 91.4 tokens/s, Running: 3 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.8%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:05:32 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=65.439, P90 xfer time (ms)=83.423, Avg post time (ms)=8.419, P90 post time (ms)=14.934, Avg MB per transfer=152.0, Throughput (MB/s)=2322.756, Avg number of descriptors=608.0
+(APIServer pid=1036296) INFO:     127.0.0.1:57210 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:42418 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:57208 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:05:42 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 111.3 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.4%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:05:42 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=47.372, P90 xfer time (ms)=61.182, Avg post time (ms)=5.446, P90 post time (ms)=7.117, Avg MB per transfer=106.667, Throughput (MB/s)=2251.682, Avg number of descriptors=426.7
+(APIServer pid=1036296) INFO:     127.0.0.1:42412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:36588 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:42412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:05:52 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 87.0 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.3%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:05:52 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=50.91, P90 xfer time (ms)=74.234, Avg post time (ms)=9.881, P90 post time (ms)=15.223, Avg MB per transfer=266.667, Throughput (MB/s)=5238.002, Avg number of descriptors=1066.7
+(APIServer pid=1036296) INFO:     127.0.0.1:42412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:43520 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:43534 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:43520 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:06:02 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 71.7 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.6%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:06:02 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=176.958, P90 xfer time (ms)=386.988, Avg post time (ms)=7.097, P90 post time (ms)=13.71, Avg MB per transfer=272.0, Throughput (MB/s)=1537.084, Avg number of descriptors=928.0
+(APIServer pid=1036296) INFO:     127.0.0.1:43520 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:43534 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:42412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:42412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:06:12 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 99.4 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.4%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:06:12 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=346.106, P90 xfer time (ms)=714.631, Avg post time (ms)=16.37, P90 post time (ms)=29.118, Avg MB per transfer=208.0, Throughput (MB/s)=600.972, Avg number of descriptors=400.0
+(APIServer pid=1036296) INFO:     127.0.0.1:42412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:43534 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:43534 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:06:22 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 31.8 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.1%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:06:22 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=204.137, P90 xfer time (ms)=418.002, Avg post time (ms)=7.404, P90 post time (ms)=7.891, Avg MB per transfer=256.0, Throughput (MB/s)=1254.062, Avg number of descriptors=789.3
+(APIServer pid=1036296) INFO:     127.0.0.1:42898 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:43534 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:42898 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:43534 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:43534 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:06:32 [loggers.py:259] Engine 000: Avg prompt throughput: 0.5 tokens/s, Avg generation throughput: 27.7 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.2%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:06:32 [metrics.py:103] KV Transfer metrics: Num successful transfers=5, Avg xfer time (ms)=49.48, P90 xfer time (ms)=75.327, Avg post time (ms)=11.665, P90 post time (ms)=15.651, Avg MB per transfer=364.8, Throughput (MB/s)=7372.706, Avg number of descriptors=1459.2
+(APIServer pid=1036296) INFO 06-22 02:06:42 [loggers.py:259] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 24.4 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:06:52 [loggers.py:259] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 0.0 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO:     127.0.0.1:46760 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:07:02 [loggers.py:259] Engine 000: Avg prompt throughput: 0.1 tokens/s, Avg generation throughput: 8.5 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.2%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:07:02 [metrics.py:103] KV Transfer metrics: Num successful transfers=1, Avg xfer time (ms)=73.036, P90 xfer time (ms)=73.036, Avg post time (ms)=22.869, P90 post time (ms)=22.869, Avg MB per transfer=32.0, Throughput (MB/s)=438.14, Avg number of descriptors=128.0
+(APIServer pid=1036296) INFO:     127.0.0.1:46760 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:07:12 [loggers.py:259] Engine 000: Avg prompt throughput: 0.1 tokens/s, Avg generation throughput: 23.4 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.1%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:07:12 [metrics.py:103] KV Transfer metrics: Num successful transfers=1, Avg xfer time (ms)=16.133, P90 xfer time (ms)=16.133, Avg post time (ms)=4.941, P90 post time (ms)=4.941, Avg MB per transfer=256.0, Throughput (MB/s)=15868.096, Avg number of descriptors=1024.0
+(APIServer pid=1036296) INFO:     127.0.0.1:46760 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49378 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:46760 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49392 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49378 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49402 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49416 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:46760 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49428 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49402 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44068 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49402 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44072 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:07:22 [loggers.py:259] Engine 000: Avg prompt throughput: 1.3 tokens/s, Avg generation throughput: 166.6 tokens/s, Running: 8 reqs, Waiting: 0 reqs, GPU KV cache usage: 2.8%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:07:22 [metrics.py:103] KV Transfer metrics: Num successful transfers=13, Avg xfer time (ms)=96.305, P90 xfer time (ms)=205.951, Avg post time (ms)=5.049, P90 post time (ms)=13.984, Avg MB per transfer=174.769, Throughput (MB/s)=1814.747, Avg number of descriptors=699.1
+(APIServer pid=1036296) INFO:     127.0.0.1:44068 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44076 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44082 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:46760 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49428 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44072 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44076 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49428 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49378 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49392 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49402 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:46760 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:07:32 [loggers.py:259] Engine 000: Avg prompt throughput: 1.3 tokens/s, Avg generation throughput: 325.1 tokens/s, Running: 8 reqs, Waiting: 0 reqs, GPU KV cache usage: 3.7%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:07:32 [metrics.py:103] KV Transfer metrics: Num successful transfers=13, Avg xfer time (ms)=78.324, P90 xfer time (ms)=155.314, Avg post time (ms)=7.089, P90 post time (ms)=14.766, Avg MB per transfer=157.538, Throughput (MB/s)=2011.357, Avg number of descriptors=630.2
+(APIServer pid=1036296) INFO:     127.0.0.1:49412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:46760 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49416 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:46760 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49392 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49416 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49428 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44068 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49392 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44072 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49428 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44076 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:07:42 [loggers.py:259] Engine 000: Avg prompt throughput: 1.0 tokens/s, Avg generation throughput: 275.4 tokens/s, Running: 4 reqs, Waiting: 3 reqs, GPU KV cache usage: 6.1%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:07:42 [metrics.py:103] KV Transfer metrics: Num successful transfers=10, Avg xfer time (ms)=424.136, P90 xfer time (ms)=1247.522, Avg post time (ms)=8.137, P90 post time (ms)=19.238, Avg MB per transfer=192.0, Throughput (MB/s)=452.685, Avg number of descriptors=697.6
+(APIServer pid=1036296) INFO:     127.0.0.1:49378 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49402 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44068 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49392 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49428 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44076 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49378 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49392 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:46760 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49378 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49402 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:07:52 [loggers.py:259] Engine 000: Avg prompt throughput: 1.3 tokens/s, Avg generation throughput: 216.2 tokens/s, Running: 5 reqs, Waiting: 2 reqs, GPU KV cache usage: 4.3%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:07:52 [metrics.py:103] KV Transfer metrics: Num successful transfers=13, Avg xfer time (ms)=1704.684, P90 xfer time (ms)=3375.699, Avg post time (ms)=5.547, P90 post time (ms)=12.062, Avg MB per transfer=339.692, Throughput (MB/s)=199.27, Avg number of descriptors=841.8
+(APIServer pid=1036296) INFO:     127.0.0.1:49416 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:46760 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49392 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:46760 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49416 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49392 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44072 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49416 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49378 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49402 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:08:02 [loggers.py:259] Engine 000: Avg prompt throughput: 1.1 tokens/s, Avg generation throughput: 225.5 tokens/s, Running: 4 reqs, Waiting: 2 reqs, GPU KV cache usage: 5.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:08:02 [metrics.py:103] KV Transfer metrics: Num successful transfers=11, Avg xfer time (ms)=358.903, P90 xfer time (ms)=824.611, Avg post time (ms)=6.539, P90 post time (ms)=18.314, Avg MB per transfer=247.273, Throughput (MB/s)=688.967, Avg number of descriptors=564.4
+(APIServer pid=1036296) INFO:     127.0.0.1:49416 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:46760 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49378 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49412 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:08:12 [loggers.py:259] Engine 000: Avg prompt throughput: 0.6 tokens/s, Avg generation throughput: 146.4 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.3%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:08:12 [metrics.py:103] KV Transfer metrics: Num successful transfers=6, Avg xfer time (ms)=911.032, P90 xfer time (ms)=1497.226, Avg post time (ms)=2.64, P90 post time (ms)=5.634, Avg MB per transfer=229.333, Throughput (MB/s)=251.729, Avg number of descriptors=501.3
+(APIServer pid=1036296) INFO 06-22 02:08:22 [loggers.py:259] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 23.6 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO:     127.0.0.1:60420 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:08:32 [loggers.py:259] Engine 000: Avg prompt throughput: 0.1 tokens/s, Avg generation throughput: 6.4 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:08:32 [metrics.py:103] KV Transfer metrics: Num successful transfers=1, Avg xfer time (ms)=431.621, P90 xfer time (ms)=431.621, Avg post time (ms)=20.542, P90 post time (ms)=20.542, Avg MB per transfer=256.0, Throughput (MB/s)=593.113, Avg number of descriptors=640.0
+(APIServer pid=1036296) INFO:     127.0.0.1:52860 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52860 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:08:42 [loggers.py:259] Engine 000: Avg prompt throughput: 0.2 tokens/s, Avg generation throughput: 8.1 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.2%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:08:42 [metrics.py:103] KV Transfer metrics: Num successful transfers=2, Avg xfer time (ms)=387.476, P90 xfer time (ms)=456.856, Avg post time (ms)=10.53, P90 post time (ms)=18.406, Avg MB per transfer=144.0, Throughput (MB/s)=371.635, Avg number of descriptors=448.0
+(APIServer pid=1036296) INFO:     127.0.0.1:52960 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52968 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52960 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52972 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52982 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52968 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52990 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53000 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53002 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53014 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52960 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52982 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:53024 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52860 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52960 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:36994 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52860 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52960 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:08:52 [loggers.py:259] Engine 000: Avg prompt throughput: 1.8 tokens/s, Avg generation throughput: 252.0 tokens/s, Running: 11 reqs, Waiting: 0 reqs, GPU KV cache usage: 4.5%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:08:52 [metrics.py:103] KV Transfer metrics: Num successful transfers=18, Avg xfer time (ms)=187.795, P90 xfer time (ms)=562.986, Avg post time (ms)=4.784, P90 post time (ms)=11.099, Avg MB per transfer=160.0, Throughput (MB/s)=851.995, Avg number of descriptors=640.0
+(APIServer pid=1036296) INFO:     127.0.0.1:52860 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52968 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52990 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52860 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52982 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52860 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52960 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52860 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52972 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52860 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:09:02 [loggers.py:259] Engine 000: Avg prompt throughput: 0.9 tokens/s, Avg generation throughput: 247.5 tokens/s, Running: 3 reqs, Waiting: 1 reqs, GPU KV cache usage: 2.9%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:09:02 [metrics.py:103] KV Transfer metrics: Num successful transfers=9, Avg xfer time (ms)=69.418, P90 xfer time (ms)=169.814, Avg post time (ms)=13.113, P90 post time (ms)=18.475, Avg MB per transfer=405.333, Throughput (MB/s)=5839.033, Avg number of descriptors=1621.3
+(APIServer pid=1036296) INFO:     127.0.0.1:52960 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52972 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52990 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52960 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52972 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:36994 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:38610 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52968 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52860 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:36994 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52860 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52968 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52684 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:09:12 [loggers.py:259] Engine 000: Avg prompt throughput: 1.4 tokens/s, Avg generation throughput: 198.4 tokens/s, Running: 8 reqs, Waiting: 0 reqs, GPU KV cache usage: 5.6%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:09:12 [metrics.py:103] KV Transfer metrics: Num successful transfers=14, Avg xfer time (ms)=93.69, P90 xfer time (ms)=196.475, Avg post time (ms)=8.644, P90 post time (ms)=18.622, Avg MB per transfer=235.429, Throughput (MB/s)=2512.85, Avg number of descriptors=941.7
+(APIServer pid=1036296) INFO:     127.0.0.1:52860 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52972 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52684 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52696 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52708 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52720 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:36994 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52990 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52684 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52720 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52860 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52960 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:09:22 [loggers.py:259] Engine 000: Avg prompt throughput: 1.2 tokens/s, Avg generation throughput: 325.1 tokens/s, Running: 8 reqs, Waiting: 0 reqs, GPU KV cache usage: 4.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:09:22 [metrics.py:103] KV Transfer metrics: Num successful transfers=12, Avg xfer time (ms)=65.18, P90 xfer time (ms)=94.527, Avg post time (ms)=8.218, P90 post time (ms)=16.012, Avg MB per transfer=210.667, Throughput (MB/s)=3232.059, Avg number of descriptors=842.7
+(APIServer pid=1036296) INFO:     127.0.0.1:38610 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52960 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52684 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52968 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:36994 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52960 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52860 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52960 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52972 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52860 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:38610 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:09:32 [loggers.py:259] Engine 000: Avg prompt throughput: 1.1 tokens/s, Avg generation throughput: 282.4 tokens/s, Running: 5 reqs, Waiting: 0 reqs, GPU KV cache usage: 3.1%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:09:32 [metrics.py:103] KV Transfer metrics: Num successful transfers=11, Avg xfer time (ms)=97.493, P90 xfer time (ms)=152.796, Avg post time (ms)=9.369, P90 post time (ms)=18.011, Avg MB per transfer=250.182, Throughput (MB/s)=2566.14, Avg number of descriptors=1000.7
+(APIServer pid=1036296) INFO:     127.0.0.1:52968 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:52860 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:09:42 [loggers.py:259] Engine 000: Avg prompt throughput: 0.2 tokens/s, Avg generation throughput: 162.5 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.8%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:09:42 [metrics.py:103] KV Transfer metrics: Num successful transfers=2, Avg xfer time (ms)=78.508, P90 xfer time (ms)=108.585, Avg post time (ms)=12.43, P90 post time (ms)=15.281, Avg MB per transfer=272.0, Throughput (MB/s)=3464.637, Avg number of descriptors=1088.0
+(APIServer pid=1036296) INFO 06-22 02:09:52 [loggers.py:259] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 18.9 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:10:02 [loggers.py:259] Engine 000: Avg prompt throughput: 0.1 tokens/s, Avg generation throughput: 5.9 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.1%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:10:02 [metrics.py:103] KV Transfer metrics: Num successful transfers=1, Avg xfer time (ms)=18.268, P90 xfer time (ms)=18.268, Avg post time (ms)=6.012, P90 post time (ms)=6.012, Avg MB per transfer=256.0, Throughput (MB/s)=14013.576, Avg number of descriptors=1024.0
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44380 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:10:12 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 19.7 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:10:12 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=19.246, P90 xfer time (ms)=23.357, Avg post time (ms)=8.088, P90 post time (ms)=8.469, Avg MB per transfer=256.0, Throughput (MB/s)=13301.696, Avg number of descriptors=1024.0
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44380 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:10:22 [loggers.py:259] Engine 000: Avg prompt throughput: 0.5 tokens/s, Avg generation throughput: 32.1 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.2%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:10:22 [metrics.py:103] KV Transfer metrics: Num successful transfers=5, Avg xfer time (ms)=37.461, P90 xfer time (ms)=60.174, Avg post time (ms)=7.17, P90 post time (ms)=11.48, Avg MB per transfer=262.4, Throughput (MB/s)=7004.618, Avg number of descriptors=1049.6
+(APIServer pid=1036296) INFO:     127.0.0.1:44580 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44580 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44580 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:10:32 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 60.9 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.4%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:10:32 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=33.554, P90 xfer time (ms)=36.392, Avg post time (ms)=12.644, P90 post time (ms)=15.387, Avg MB per transfer=426.667, Throughput (MB/s)=12715.948, Avg number of descriptors=1706.7
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:10:42 [loggers.py:259] Engine 000: Avg prompt throughput: 0.2 tokens/s, Avg generation throughput: 15.8 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:10:42 [metrics.py:103] KV Transfer metrics: Num successful transfers=2, Avg xfer time (ms)=30.724, P90 xfer time (ms)=30.938, Avg post time (ms)=11.808, P90 post time (ms)=14.553, Avg MB per transfer=512.0, Throughput (MB/s)=16664.768, Avg number of descriptors=2048.0
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47996 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:48010 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:47996 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:10:52 [loggers.py:259] Engine 000: Avg prompt throughput: 0.6 tokens/s, Avg generation throughput: 46.7 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.3%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:10:52 [metrics.py:103] KV Transfer metrics: Num successful transfers=6, Avg xfer time (ms)=36.961, P90 xfer time (ms)=64.897, Avg post time (ms)=5.874, P90 post time (ms)=7.932, Avg MB per transfer=261.333, Throughput (MB/s)=7070.548, Avg number of descriptors=1045.3
+(APIServer pid=1036296) INFO:     127.0.0.1:47996 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:11:02 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 25.2 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.1%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:11:02 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=29.223, P90 xfer time (ms)=40.34, Avg post time (ms)=10.293, P90 post time (ms)=14.345, Avg MB per transfer=341.333, Throughput (MB/s)=11680.297, Avg number of descriptors=1365.3
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:56870 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:11:12 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 34.5 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 2.3%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:11:12 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=50.868, P90 xfer time (ms)=75.393, Avg post time (ms)=11.041, P90 post time (ms)=15.725, Avg MB per transfer=352.0, Throughput (MB/s)=6919.826, Avg number of descriptors=1408.0
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:34920 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:11:22 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 53.6 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:11:22 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=54.255, P90 xfer time (ms)=87.401, Avg post time (ms)=14.449, P90 post time (ms)=18.219, Avg MB per transfer=426.667, Throughput (MB/s)=7864.05, Avg number of descriptors=1706.7
+(APIServer pid=1036296) INFO:     127.0.0.1:44374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49542 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49556 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:11:32 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 18.5 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.1%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:11:32 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=23.612, P90 xfer time (ms)=29.618, Avg post time (ms)=9.59, P90 post time (ms)=13.884, Avg MB per transfer=341.333, Throughput (MB/s)=14456.13, Avg number of descriptors=1365.3
+(APIServer pid=1036296) INFO:     127.0.0.1:49542 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49556 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:11:42 [loggers.py:259] Engine 000: Avg prompt throughput: 0.2 tokens/s, Avg generation throughput: 13.5 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:11:42 [metrics.py:103] KV Transfer metrics: Num successful transfers=2, Avg xfer time (ms)=20.57, P90 xfer time (ms)=24.796, Avg post time (ms)=7.898, P90 post time (ms)=8.464, Avg MB per transfer=256.0, Throughput (MB/s)=12445.309, Avg number of descriptors=1024.0
+(APIServer pid=1036296) INFO:     127.0.0.1:49580 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49580 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49582 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49582 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:11:52 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 39.9 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.4%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:11:52 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=47.671, P90 xfer time (ms)=72.999, Avg post time (ms)=8.186, P90 post time (ms)=15.131, Avg MB per transfer=208.0, Throughput (MB/s)=4363.24, Avg number of descriptors=832.0
+(APIServer pid=1036296) INFO:     127.0.0.1:54848 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:54858 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:12:02 [loggers.py:259] Engine 000: Avg prompt throughput: 0.2 tokens/s, Avg generation throughput: 82.5 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.4%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:12:02 [metrics.py:103] KV Transfer metrics: Num successful transfers=2, Avg xfer time (ms)=24.102, P90 xfer time (ms)=25.61, Avg post time (ms)=7.768, P90 post time (ms)=8.354, Avg MB per transfer=256.0, Throughput (MB/s)=10621.525, Avg number of descriptors=1024.0
+(APIServer pid=1036296) INFO:     127.0.0.1:49580 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49582 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49582 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:60934 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:12:12 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 70.1 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.6%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:12:12 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=146.601, P90 xfer time (ms)=312.493, Avg post time (ms)=10.609, P90 post time (ms)=22.638, Avg MB per transfer=208.0, Throughput (MB/s)=1418.815, Avg number of descriptors=640.0
+(APIServer pid=1036296) INFO:     127.0.0.1:49582 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49580 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:49580 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:12:22 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 65.3 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.2%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:12:22 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=303.203, P90 xfer time (ms)=428.228, Avg post time (ms)=20.999, P90 post time (ms)=30.919, Avg MB per transfer=181.333, Throughput (MB/s)=598.059, Avg number of descriptors=554.7
+(APIServer pid=1036296) INFO:     127.0.0.1:60934 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:60934 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:60934 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:54594 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:12:32 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 64.1 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 2.5%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:12:32 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=135.136, P90 xfer time (ms)=300.403, Avg post time (ms)=9.017, P90 post time (ms)=10.009, Avg MB per transfer=448.0, Throughput (MB/s)=3315.173, Avg number of descriptors=1248.0
+(APIServer pid=1036296) INFO:     127.0.0.1:60934 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:60934 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:45338 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:12:42 [loggers.py:259] Engine 000: Avg prompt throughput: 0.3 tokens/s, Avg generation throughput: 34.3 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.4%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:12:42 [metrics.py:103] KV Transfer metrics: Num successful transfers=3, Avg xfer time (ms)=202.899, P90 xfer time (ms)=353.45, Avg post time (ms)=11.017, P90 post time (ms)=24.259, Avg MB per transfer=106.667, Throughput (MB/s)=525.713, Avg number of descriptors=277.3
+(APIServer pid=1036296) INFO:     127.0.0.1:45342 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:45348 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:60934 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:54676 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:12:52 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 137.0 tokens/s, Running: 3 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.9%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:12:52 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=181.74, P90 xfer time (ms)=383.53, Avg post time (ms)=12.267, P90 post time (ms)=24.168, Avg MB per transfer=88.0, Throughput (MB/s)=484.21, Avg number of descriptors=272.0
+(APIServer pid=1036296) INFO:     127.0.0.1:60934 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:45338 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:45342 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:60934 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:13:02 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 126.6 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.5%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:13:02 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=194.42, P90 xfer time (ms)=398.105, Avg post time (ms)=12.779, P90 post time (ms)=22.704, Avg MB per transfer=88.0, Throughput (MB/s)=452.628, Avg number of descriptors=256.0
+(APIServer pid=1036296) INFO:     127.0.0.1:60934 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:54676 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:45338 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:51738 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:13:12 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 93.3 tokens/s, Running: 4 reqs, Waiting: 0 reqs, GPU KV cache usage: 2.6%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:13:12 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=407.941, P90 xfer time (ms)=837.612, Avg post time (ms)=9.146, P90 post time (ms)=20.133, Avg MB per transfer=144.0, Throughput (MB/s)=352.992, Avg number of descriptors=416.0
+(APIServer pid=1036296) INFO:     127.0.0.1:45338 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:45338 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:13:22 [loggers.py:259] Engine 000: Avg prompt throughput: 0.2 tokens/s, Avg generation throughput: 88.5 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.3%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:13:22 [metrics.py:103] KV Transfer metrics: Num successful transfers=2, Avg xfer time (ms)=49.31, P90 xfer time (ms)=61.737, Avg post time (ms)=14.76, P90 post time (ms)=16.377, Avg MB per transfer=272.0, Throughput (MB/s)=5516.067, Avg number of descriptors=928.0
+(APIServer pid=1036296) INFO 06-22 02:13:32 [loggers.py:259] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 4.8 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO:     127.0.0.1:40712 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:13:42 [loggers.py:259] Engine 000: Avg prompt throughput: 0.1 tokens/s, Avg generation throughput: 15.4 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.3%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:13:42 [metrics.py:103] KV Transfer metrics: Num successful transfers=1, Avg xfer time (ms)=53.325, P90 xfer time (ms)=53.325, Avg post time (ms)=4.095, P90 post time (ms)=4.095, Avg MB per transfer=32.0, Throughput (MB/s)=600.094, Avg number of descriptors=128.0
+(APIServer pid=1036296) INFO:     127.0.0.1:44808 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:13:52 [loggers.py:259] Engine 000: Avg prompt throughput: 0.1 tokens/s, Avg generation throughput: 16.6 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:13:52 [metrics.py:103] KV Transfer metrics: Num successful transfers=1, Avg xfer time (ms)=418.043, P90 xfer time (ms)=418.043, Avg post time (ms)=23.189, P90 post time (ms)=23.189, Avg MB per transfer=256.0, Throughput (MB/s)=612.377, Avg number of descriptors=832.0
+(APIServer pid=1036296) INFO:     127.0.0.1:44808 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44824 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44840 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44850 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44808 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44852 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44808 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44840 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44808 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:14:02 [loggers.py:259] Engine 000: Avg prompt throughput: 1.1 tokens/s, Avg generation throughput: 122.0 tokens/s, Running: 5 reqs, Waiting: 0 reqs, GPU KV cache usage: 3.1%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:14:02 [metrics.py:103] KV Transfer metrics: Num successful transfers=11, Avg xfer time (ms)=745.007, P90 xfer time (ms)=1900.434, Avg post time (ms)=4.118, P90 post time (ms)=9.092, Avg MB per transfer=244.364, Throughput (MB/s)=328.002, Avg number of descriptors=791.3
+(APIServer pid=1036296) INFO:     127.0.0.1:44824 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44808 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44824 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44808 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44850 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44824 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44808 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:56776 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44808 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:14:12 [loggers.py:259] Engine 000: Avg prompt throughput: 0.9 tokens/s, Avg generation throughput: 153.1 tokens/s, Running: 3 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.7%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:14:12 [metrics.py:103] KV Transfer metrics: Num successful transfers=9, Avg xfer time (ms)=54.833, P90 xfer time (ms)=113.37, Avg post time (ms)=8.003, P90 post time (ms)=15.984, Avg MB per transfer=238.222, Throughput (MB/s)=4344.496, Avg number of descriptors=952.9
+(APIServer pid=1036296) INFO:     127.0.0.1:44822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44852 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44824 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:56776 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44824 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:56776 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44850 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:14:22 [loggers.py:259] Engine 000: Avg prompt throughput: 1.1 tokens/s, Avg generation throughput: 188.0 tokens/s, Running: 4 reqs, Waiting: 0 reqs, GPU KV cache usage: 3.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:14:22 [metrics.py:103] KV Transfer metrics: Num successful transfers=11, Avg xfer time (ms)=39.329, P90 xfer time (ms)=87.337, Avg post time (ms)=8.879, P90 post time (ms)=15.957, Avg MB per transfer=261.818, Throughput (MB/s)=6657.112, Avg number of descriptors=1047.3
+(APIServer pid=1036296) INFO:     127.0.0.1:44850 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44808 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44824 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44808 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44808 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44852 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44808 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:14:32 [loggers.py:259] Engine 000: Avg prompt throughput: 0.9 tokens/s, Avg generation throughput: 114.3 tokens/s, Running: 2 reqs, Waiting: 2 reqs, GPU KV cache usage: 3.5%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:14:32 [metrics.py:103] KV Transfer metrics: Num successful transfers=9, Avg xfer time (ms)=42.785, P90 xfer time (ms)=52.208, Avg post time (ms)=10.055, P90 post time (ms)=16.459, Avg MB per transfer=401.778, Throughput (MB/s)=9390.549, Avg number of descriptors=1336.9
+(APIServer pid=1036296) INFO:     127.0.0.1:44852 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:45968 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44808 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:45982 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:45992 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:46000 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44824 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:46000 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:39596 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44808 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44824 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:14:42 [loggers.py:259] Engine 000: Avg prompt throughput: 1.3 tokens/s, Avg generation throughput: 164.1 tokens/s, Running: 6 reqs, Waiting: 0 reqs, GPU KV cache usage: 4.2%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:14:42 [metrics.py:103] KV Transfer metrics: Num successful transfers=13, Avg xfer time (ms)=1649.31, P90 xfer time (ms)=4432.991, Avg post time (ms)=4.039, P90 post time (ms)=9.747, Avg MB per transfer=265.846, Throughput (MB/s)=161.186, Avg number of descriptors=708.9
+(APIServer pid=1036296) INFO:     127.0.0.1:45968 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44808 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44824 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:45982 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44808 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44852 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:45982 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:46000 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:45968 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:44822 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:14:52 [loggers.py:259] Engine 000: Avg prompt throughput: 1.2 tokens/s, Avg generation throughput: 225.6 tokens/s, Running: 5 reqs, Waiting: 0 reqs, GPU KV cache usage: 3.9%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:14:52 [metrics.py:103] KV Transfer metrics: Num successful transfers=12, Avg xfer time (ms)=287.753, P90 xfer time (ms)=836.437, Avg post time (ms)=8.611, P90 post time (ms)=18.507, Avg MB per transfer=266.667, Throughput (MB/s)=926.721, Avg number of descriptors=1045.3
+(APIServer pid=1036296) INFO:     127.0.0.1:44852 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:15:02 [loggers.py:259] Engine 000: Avg prompt throughput: 0.1 tokens/s, Avg generation throughput: 126.4 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.4%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:15:02 [metrics.py:103] KV Transfer metrics: Num successful transfers=1, Avg xfer time (ms)=191.297, P90 xfer time (ms)=191.297, Avg post time (ms)=0.34, P90 post time (ms)=0.34, Avg MB per transfer=32.0, Throughput (MB/s)=167.279, Avg number of descriptors=128.0
+(APIServer pid=1036296) INFO 06-22 02:15:12 [loggers.py:259] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 0.7 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:15:27 [loggers.py:259] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 0.0 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO:     127.0.0.1:33042 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:15:38 [loggers.py:259] Engine 000: Avg prompt throughput: 0.1 tokens/s, Avg generation throughput: 5.7 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:15:38 [metrics.py:103] KV Transfer metrics: Num successful transfers=1, Avg xfer time (ms)=438.149, P90 xfer time (ms)=438.149, Avg post time (ms)=36.191, P90 post time (ms)=36.191, Avg MB per transfer=256.0, Throughput (MB/s)=584.276, Avg number of descriptors=960.0
+(APIServer pid=1036296) INFO:     127.0.0.1:41256 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41256 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41260 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41274 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41260 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:15:48 [loggers.py:259] Engine 000: Avg prompt throughput: 0.4 tokens/s, Avg generation throughput: 25.9 tokens/s, Running: 2 reqs, Waiting: 1 reqs, GPU KV cache usage: 0.5%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:15:48 [metrics.py:103] KV Transfer metrics: Num successful transfers=4, Avg xfer time (ms)=44.644, P90 xfer time (ms)=69.875, Avg post time (ms)=5.974, P90 post time (ms)=8.767, Avg MB per transfer=144.0, Throughput (MB/s)=3225.499, Avg number of descriptors=576.0
+(APIServer pid=1036296) INFO:     127.0.0.1:41278 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:39222 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:39236 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:39244 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41256 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:39222 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41256 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41274 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41256 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:15:58 [loggers.py:259] Engine 000: Avg prompt throughput: 1.0 tokens/s, Avg generation throughput: 170.7 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.4%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:15:58 [metrics.py:103] KV Transfer metrics: Num successful transfers=10, Avg xfer time (ms)=67.139, P90 xfer time (ms)=141.975, Avg post time (ms)=9.219, P90 post time (ms)=16.061, Avg MB per transfer=291.2, Throughput (MB/s)=4337.245, Avg number of descriptors=1164.8
+(APIServer pid=1036296) INFO:     127.0.0.1:41274 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41256 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41274 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:39244 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41256 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41260 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41256 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41260 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:39244 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41260 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41274 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:16:08 [loggers.py:259] Engine 000: Avg prompt throughput: 1.1 tokens/s, Avg generation throughput: 105.9 tokens/s, Running: 4 reqs, Waiting: 0 reqs, GPU KV cache usage: 2.6%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:16:08 [metrics.py:103] KV Transfer metrics: Num successful transfers=11, Avg xfer time (ms)=51.173, P90 xfer time (ms)=85.969, Avg post time (ms)=7.764, P90 post time (ms)=16.016, Avg MB per transfer=241.455, Throughput (MB/s)=4718.431, Avg number of descriptors=965.8
+(APIServer pid=1036296) INFO:     127.0.0.1:41260 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41274 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41260 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:50660 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:50666 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:50660 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:50666 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:50678 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41274 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:50660 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:16:18 [loggers.py:259] Engine 000: Avg prompt throughput: 1.0 tokens/s, Avg generation throughput: 181.0 tokens/s, Running: 3 reqs, Waiting: 0 reqs, GPU KV cache usage: 4.5%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:16:18 [metrics.py:103] KV Transfer metrics: Num successful transfers=10, Avg xfer time (ms)=73.5, P90 xfer time (ms)=130.98, Avg post time (ms)=17.725, P90 post time (ms)=25.856, Avg MB per transfer=288.0, Throughput (MB/s)=3918.357, Avg number of descriptors=1152.0
+(APIServer pid=1036296) INFO:     127.0.0.1:41256 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41260 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41274 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41260 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41274 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41260 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:50660 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41274 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41260 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:50660 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:55862 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:16:28 [loggers.py:259] Engine 000: Avg prompt throughput: 1.1 tokens/s, Avg generation throughput: 114.9 tokens/s, Running: 3 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.6%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:16:29 [metrics.py:103] KV Transfer metrics: Num successful transfers=11, Avg xfer time (ms)=58.725, P90 xfer time (ms)=116.871, Avg post time (ms)=8.417, P90 post time (ms)=16.05, Avg MB per transfer=285.091, Throughput (MB/s)=4854.662, Avg number of descriptors=1140.4
+(APIServer pid=1036296) INFO:     127.0.0.1:41260 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:50660 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:55862 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41256 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41260 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41274 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41256 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:55862 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:39670 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41274 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:55862 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41274 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:16:39 [loggers.py:259] Engine 000: Avg prompt throughput: 1.2 tokens/s, Avg generation throughput: 154.4 tokens/s, Running: 5 reqs, Waiting: 0 reqs, GPU KV cache usage: 3.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:16:39 [metrics.py:103] KV Transfer metrics: Num successful transfers=12, Avg xfer time (ms)=61.02, P90 xfer time (ms)=154.944, Avg post time (ms)=9.225, P90 post time (ms)=16.057, Avg MB per transfer=285.333, Throughput (MB/s)=4676.043, Avg number of descriptors=1141.3
+(APIServer pid=1036296) INFO:     127.0.0.1:41260 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41274 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41256 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:55862 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41260 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41274 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41256 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41274 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:41256 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO:     127.0.0.1:50660 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=1036296) INFO 06-22 02:16:49 [loggers.py:259] Engine 000: Avg prompt throughput: 1.0 tokens/s, Avg generation throughput: 142.9 tokens/s, Running: 3 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.7%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(APIServer pid=1036296) INFO 06-22 02:16:49 [metrics.py:103] KV Transfer metrics: Num successful transfers=10, Avg xfer time (ms)=62.615, P90 xfer time (ms)=139.219, Avg post time (ms)=6.81, P90 post time (ms)=16.287, Avg MB per transfer=217.6, Throughput (MB/s)=3475.211, Avg number of descriptors=870.4
+(APIServer pid=1036296) INFO 06-22 02:16:59 [loggers.py:259] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 78.3 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 100.0%
+(EngineCore pid=1042754) INFO 06-22 02:17:01 [core.py:1210] Shutdown initiated (timeout=0)
+(EngineCore pid=1042754) INFO 06-22 02:17:01 [core.py:1233] Shutdown complete
+(APIServer pid=1036296) INFO:     Shutting down
+(APIServer pid=1036296) INFO:     Waiting for application shutdown.
+(APIServer pid=1036296) INFO:     Application shutdown complete.
+(APIServer pid=1036296) INFO:     Finished server process [1036296]
+[rank0]:[W622 02:17:01.883317174 ProcessGroupNCCL.cpp:1553] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())

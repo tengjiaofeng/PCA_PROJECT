@@ -1,7 +1,7 @@
 vLLM disaggregated-prefill support check
 ============================================
-checked_at_utc: 2026-06-21T10:10:39.629457+00:00
-python: /home/tjfeng/anaconda3/envs/vllm/bin/python
+checked_at_utc: 2026-06-21T18:44:09.780932+00:00
+python: /home/tjfeng/anaconda3/envs/vllm-nixl/bin/python
 vllm_path: /home/tjfeng/vllm
 vllm_version: 0.18.1rc1.dev264+ge31915063.cu124
 p2p_nccl_connector_found: true
@@ -10,7 +10,7 @@ p2p_nccl_examples_found: true
 p2p_nccl_example_paths: ["/home/tjfeng/vllm/examples/online_serving/disaggregated_serving_p2p_nccl_xpyd", "/home/tjfeng/vllm/examples/online_serving/disaggregated_serving_p2p_nccl_xpyd/disagg_example_p2p_nccl_xpyd.sh", "/home/tjfeng/vllm/examples/online_serving/disaggregated_serving_p2p_nccl_xpyd/disagg_proxy_p2p_nccl_xpyd.py"]
 p2p_proxy_dependencies: {"aiohttp": true, "msgpack": true, "quart": true, "zmq": true}
 p2p_runtime_dependencies_importable: true
-nixl_importable: false
+nixl_importable: true
 lmcache_importable: false
 recommended_route: p2p_nccl_xpyd
 real_pd_launch_candidate: true

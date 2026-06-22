@@ -1,0 +1,3 @@
+run_id,preset,serving_mode,workload,arrival_rate,repeat,seed,status,return_code,elapsed_s,output_csv,error_msg
+baseline-mixed_50p50d-colocated_4replica-r1-rep1,baseline,colocated_4replica,mixed_50p50d,1.0,1,42,success,0,43.977,outputs/metrics/real4gpu/online_baseline-mixed_50p50d-colocated_4replica-r1-rep1.csv,
+baseline-mixed_50p50d-aggregated_tp4-r1-rep1,baseline,aggregated_tp4,mixed_50p50d,1.0,1,42,success,0,25.453,outputs/metrics/real4gpu/online_baseline-mixed_50p50d-aggregated_tp4-r1-rep1.csv,

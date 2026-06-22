@@ -1,0 +1,32 @@
+{
+  "mode": "aggregated_tp4",
+  "started_at_utc": "2026-06-21T17:09:19.118975+00:00",
+  "result_type": "real_aggregated_tp",
+  "processes": [
+    {
+      "name": "aggregated_tp4",
+      "pid": 3951459,
+      "log": "outputs/logs/real4gpu/aggregated_tp4_aggregated_tp4.log",
+      "command": [
+        "/home/tjfeng/anaconda3/envs/vllm-nixl/bin/python",
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        "meta-llama/Llama-3.1-8B-Instruct",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8200",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "8192",
+        "--gpu-memory-utilization",
+        "0.85",
+        "--tensor-parallel-size",
+        "4",
+        "--no-enable-prefix-caching"
+      ]
+    }
+  ]
+}

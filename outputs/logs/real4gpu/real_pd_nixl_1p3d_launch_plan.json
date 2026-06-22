@@ -1,0 +1,208 @@
+{
+  "mode": "real_pd_nixl_1p3d",
+  "dry_run": false,
+  "created_at_utc": "2026-06-21T17:55:04.095357+00:00",
+  "components": [
+    {
+      "name": "prefill_0",
+      "gpu_ids": [
+        0
+      ],
+      "port": 8500,
+      "health_path": "/v1/models",
+      "command": [
+        "/home/tjfeng/anaconda3/envs/vllm-nixl/bin/python",
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        "meta-llama/Llama-3.1-8B-Instruct",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8500",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "8192",
+        "--gpu-memory-utilization",
+        "0.85",
+        "--tensor-parallel-size",
+        "1",
+        "--no-enable-prefix-caching",
+        "--enforce-eager",
+        "--block-size",
+        "128",
+        "--kv-transfer-config",
+        "{\"kv_connector\":\"NixlConnector\",\"kv_role\":\"kv_both\",\"kv_buffer_device\":\"cuda\",\"kv_load_failure_policy\":\"fail\"}"
+      ],
+      "env": {
+        "UCX_TLS": "all",
+        "UCX_NET_DEVICES": "all",
+        "VLLM_KV_CACHE_LAYOUT": "HND",
+        "VLLM_NIXL_SIDE_CHANNEL_HOST": "127.0.0.1",
+        "VLLM_NIXL_ABORT_REQUEST_TIMEOUT": "120",
+        "CUDA_VISIBLE_DEVICES": "0",
+        "VLLM_NIXL_SIDE_CHANNEL_PORT": "5600"
+      },
+      "source_example": "/home/tjfeng/vllm/docs/features/nixl_connector_usage.md"
+    },
+    {
+      "name": "decode_0",
+      "gpu_ids": [
+        1
+      ],
+      "port": 8600,
+      "health_path": "/v1/models",
+      "command": [
+        "/home/tjfeng/anaconda3/envs/vllm-nixl/bin/python",
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        "meta-llama/Llama-3.1-8B-Instruct",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8600",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "8192",
+        "--gpu-memory-utilization",
+        "0.85",
+        "--tensor-parallel-size",
+        "1",
+        "--no-enable-prefix-caching",
+        "--enforce-eager",
+        "--block-size",
+        "128",
+        "--kv-transfer-config",
+        "{\"kv_connector\":\"NixlConnector\",\"kv_role\":\"kv_both\",\"kv_buffer_device\":\"cuda\",\"kv_load_failure_policy\":\"fail\"}"
+      ],
+      "env": {
+        "UCX_TLS": "all",
+        "UCX_NET_DEVICES": "all",
+        "VLLM_KV_CACHE_LAYOUT": "HND",
+        "VLLM_NIXL_SIDE_CHANNEL_HOST": "127.0.0.1",
+        "VLLM_NIXL_ABORT_REQUEST_TIMEOUT": "120",
+        "CUDA_VISIBLE_DEVICES": "1",
+        "VLLM_NIXL_SIDE_CHANNEL_PORT": "5601"
+      },
+      "source_example": "/home/tjfeng/vllm/docs/features/nixl_connector_usage.md"
+    },
+    {
+      "name": "decode_1",
+      "gpu_ids": [
+        2
+      ],
+      "port": 8601,
+      "health_path": "/v1/models",
+      "command": [
+        "/home/tjfeng/anaconda3/envs/vllm-nixl/bin/python",
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        "meta-llama/Llama-3.1-8B-Instruct",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8601",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "8192",
+        "--gpu-memory-utilization",
+        "0.85",
+        "--tensor-parallel-size",
+        "1",
+        "--no-enable-prefix-caching",
+        "--enforce-eager",
+        "--block-size",
+        "128",
+        "--kv-transfer-config",
+        "{\"kv_connector\":\"NixlConnector\",\"kv_role\":\"kv_both\",\"kv_buffer_device\":\"cuda\",\"kv_load_failure_policy\":\"fail\"}"
+      ],
+      "env": {
+        "UCX_TLS": "all",
+        "UCX_NET_DEVICES": "all",
+        "VLLM_KV_CACHE_LAYOUT": "HND",
+        "VLLM_NIXL_SIDE_CHANNEL_HOST": "127.0.0.1",
+        "VLLM_NIXL_ABORT_REQUEST_TIMEOUT": "120",
+        "CUDA_VISIBLE_DEVICES": "2",
+        "VLLM_NIXL_SIDE_CHANNEL_PORT": "5602"
+      },
+      "source_example": "/home/tjfeng/vllm/docs/features/nixl_connector_usage.md"
+    },
+    {
+      "name": "decode_2",
+      "gpu_ids": [
+        3
+      ],
+      "port": 8602,
+      "health_path": "/v1/models",
+      "command": [
+        "/home/tjfeng/anaconda3/envs/vllm-nixl/bin/python",
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        "meta-llama/Llama-3.1-8B-Instruct",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8602",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "8192",
+        "--gpu-memory-utilization",
+        "0.85",
+        "--tensor-parallel-size",
+        "1",
+        "--no-enable-prefix-caching",
+        "--enforce-eager",
+        "--block-size",
+        "128",
+        "--kv-transfer-config",
+        "{\"kv_connector\":\"NixlConnector\",\"kv_role\":\"kv_both\",\"kv_buffer_device\":\"cuda\",\"kv_load_failure_policy\":\"fail\"}"
+      ],
+      "env": {
+        "UCX_TLS": "all",
+        "UCX_NET_DEVICES": "all",
+        "VLLM_KV_CACHE_LAYOUT": "HND",
+        "VLLM_NIXL_SIDE_CHANNEL_HOST": "127.0.0.1",
+        "VLLM_NIXL_ABORT_REQUEST_TIMEOUT": "120",
+        "CUDA_VISIBLE_DEVICES": "3",
+        "VLLM_NIXL_SIDE_CHANNEL_PORT": "5603"
+      },
+      "source_example": "/home/tjfeng/vllm/docs/features/nixl_connector_usage.md"
+    },
+    {
+      "name": "pd_proxy",
+      "gpu_ids": [],
+      "port": 8700,
+      "health_path": "/healthcheck",
+      "command": [
+        "/home/tjfeng/anaconda3/envs/vllm-nixl/bin/python",
+        "/home/tjfeng/vllm/tests/v1/kv_connector/nixl_integration/toy_proxy_server.py",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8700",
+        "--prefiller-hosts",
+        "127.0.0.1",
+        "--prefiller-ports",
+        "8500",
+        "--decoder-hosts",
+        "127.0.0.1",
+        "127.0.0.1",
+        "127.0.0.1",
+        "--decoder-ports",
+        "8600",
+        "8601",
+        "8602"
+      ],
+      "env": {},
+      "start_after_servers": true,
+      "source_example": "/home/tjfeng/vllm/docs/features/nixl_connector_usage.md"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "mode": "colocated_4replica",
-  "dry_run": true,
-  "created_at_utc": "2026-06-21T09:36:55.886766+00:00",
+  "dry_run": false,
+  "created_at_utc": "2026-06-21T17:14:35.979828+00:00",
   "components": [
     {
       "name": "colocated_0",
@@ -11,7 +11,7 @@
       "port": 8100,
       "health_path": "/v1/models",
       "command": [
-        "/home/tjfeng/anaconda3/envs/vllm/bin/python",
+        "/home/tjfeng/anaconda3/envs/vllm-nixl/bin/python",
         "-m",
         "vllm.entrypoints.openai.api_server",
         "--model",
@@ -42,7 +42,7 @@
       "port": 8101,
       "health_path": "/v1/models",
       "command": [
-        "/home/tjfeng/anaconda3/envs/vllm/bin/python",
+        "/home/tjfeng/anaconda3/envs/vllm-nixl/bin/python",
         "-m",
         "vllm.entrypoints.openai.api_server",
         "--model",
@@ -73,7 +73,7 @@
       "port": 8102,
       "health_path": "/v1/models",
       "command": [
-        "/home/tjfeng/anaconda3/envs/vllm/bin/python",
+        "/home/tjfeng/anaconda3/envs/vllm-nixl/bin/python",
         "-m",
         "vllm.entrypoints.openai.api_server",
         "--model",
@@ -104,7 +104,7 @@
       "port": 8103,
       "health_path": "/v1/models",
       "command": [
-        "/home/tjfeng/anaconda3/envs/vllm/bin/python",
+        "/home/tjfeng/anaconda3/envs/vllm-nixl/bin/python",
         "-m",
         "vllm.entrypoints.openai.api_server",
         "--model",

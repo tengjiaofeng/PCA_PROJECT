@@ -1,7 +1,7 @@
 {
   "mode": "aggregated_tp4",
-  "dry_run": true,
-  "created_at_utc": "2026-06-21T09:36:56.131767+00:00",
+  "dry_run": false,
+  "created_at_utc": "2026-06-21T17:35:21.643397+00:00",
   "components": [
     {
       "name": "aggregated_tp4",
@@ -14,7 +14,7 @@
       "port": 8200,
       "health_path": "/v1/models",
       "command": [
-        "/home/tjfeng/anaconda3/envs/vllm/bin/python",
+        "/home/tjfeng/anaconda3/envs/vllm-nixl/bin/python",
         "-m",
         "vllm.entrypoints.openai.api_server",
         "--model",

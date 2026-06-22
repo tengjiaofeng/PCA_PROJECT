@@ -1,0 +1,3 @@
+2026-06-22 00:55:06,659 | INFO | Run pilot-mixed_50p50d-real_pd_nixl_1p3d-r1-rep1: 20 requests, endpoints=['http://127.0.0.1:8700/v1/completions']
+2026-06-22 00:55:09,296 | INFO | Completed 1 warmup requests
+2026-06-22 00:55:48,432 | INFO | Wrote outputs/metrics/real4gpu/online_pilot-mixed_50p50d-real_pd_nixl_1p3d-r1-rep1.csv: 20 success, 0 failed

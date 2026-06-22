@@ -1,0 +1,107 @@
+{
+  "mode": "colocated_4replica",
+  "started_at_utc": "2026-06-21T17:06:52.747445+00:00",
+  "result_type": "real_colocated",
+  "processes": [
+    {
+      "name": "colocated_0",
+      "pid": 3883099,
+      "log": "outputs/logs/real4gpu/colocated_4replica_colocated_0.log",
+      "command": [
+        "/home/tjfeng/anaconda3/envs/vllm-nixl/bin/python",
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        "meta-llama/Llama-3.1-8B-Instruct",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8100",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "8192",
+        "--gpu-memory-utilization",
+        "0.85",
+        "--tensor-parallel-size",
+        "1",
+        "--no-enable-prefix-caching"
+      ]
+    },
+    {
+      "name": "colocated_1",
+      "pid": 3883100,
+      "log": "outputs/logs/real4gpu/colocated_4replica_colocated_1.log",
+      "command": [
+        "/home/tjfeng/anaconda3/envs/vllm-nixl/bin/python",
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        "meta-llama/Llama-3.1-8B-Instruct",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8101",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "8192",
+        "--gpu-memory-utilization",
+        "0.85",
+        "--tensor-parallel-size",
+        "1",
+        "--no-enable-prefix-caching"
+      ]
+    },
+    {
+      "name": "colocated_2",
+      "pid": 3883121,
+      "log": "outputs/logs/real4gpu/colocated_4replica_colocated_2.log",
+      "command": [
+        "/home/tjfeng/anaconda3/envs/vllm-nixl/bin/python",
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        "meta-llama/Llama-3.1-8B-Instruct",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8102",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "8192",
+        "--gpu-memory-utilization",
+        "0.85",
+        "--tensor-parallel-size",
+        "1",
+        "--no-enable-prefix-caching"
+      ]
+    },
+    {
+      "name": "colocated_3",
+      "pid": 3883128,
+      "log": "outputs/logs/real4gpu/colocated_4replica_colocated_3.log",
+      "command": [
+        "/home/tjfeng/anaconda3/envs/vllm-nixl/bin/python",
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        "meta-llama/Llama-3.1-8B-Instruct",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8103",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "8192",
+        "--gpu-memory-utilization",
+        "0.85",
+        "--tensor-parallel-size",
+        "1",
+        "--no-enable-prefix-caching"
+      ]
+    }
+  ]
+}

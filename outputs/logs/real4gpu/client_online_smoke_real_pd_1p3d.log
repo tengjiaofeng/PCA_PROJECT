@@ -1,2 +1,26 @@
-2026-06-21 17:59:28,737 | INFO | Run real_pd_1p3d-20260621T095816Z-133f9916: 2 requests, endpoints=['http://127.0.0.1:10001/v1/completions']
-2026-06-21 17:59:28,748 | INFO | Completed 0 warmup requests
+2026-06-21 18:48:04,513 | INFO | Run real_pd_1p3d-20260621T104759Z-354414e0: 1 requests, endpoints=['http://127.0.0.1:10001/v1/completions']
+2026-06-21 18:48:04,513 | INFO | Completed 0 warmup requests
+2026-06-21 18:50:04,904 | ERROR | Request short_short-synthetic_unique-000000 failed
+Traceback (most recent call last):
+  File "/home/tjfeng/PCA_PROJECT/scripts/03c_run_online_workload_client.py", line 306, in one
+    result = await asyncio.to_thread(
+  File "/home/tjfeng/anaconda3/envs/vllm/lib/python3.10/asyncio/threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+  File "/home/tjfeng/anaconda3/envs/vllm/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/tjfeng/PCA_PROJECT/scripts/03c_run_online_workload_client.py", line 210, in post_completion
+    for raw_line in response:
+  File "/home/tjfeng/anaconda3/envs/vllm/lib/python3.10/http/client.py", line 675, in readline
+    return super().readline(limit)
+  File "/home/tjfeng/anaconda3/envs/vllm/lib/python3.10/http/client.py", line 667, in peek
+    return self._peek_chunked(n)
+  File "/home/tjfeng/anaconda3/envs/vllm/lib/python3.10/http/client.py", line 703, in _peek_chunked
+    chunk_left = self._get_chunk_left()
+  File "/home/tjfeng/anaconda3/envs/vllm/lib/python3.10/http/client.py", line 566, in _get_chunk_left
+    chunk_left = self._read_next_chunk_size()
+  File "/home/tjfeng/anaconda3/envs/vllm/lib/python3.10/http/client.py", line 526, in _read_next_chunk_size
+    line = self.fp.readline(_MAXLINE + 1)
+  File "/home/tjfeng/anaconda3/envs/vllm/lib/python3.10/socket.py", line 717, in readinto
+    return self._sock.recv_into(b)
+TimeoutError: timed out
+2026-06-21 18:50:04,914 | INFO | Wrote outputs/metrics/real4gpu/online_smoke_real_pd_1p3d.csv: 0 success, 1 failed

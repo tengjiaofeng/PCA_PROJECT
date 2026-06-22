@@ -1,0 +1,17 @@
+P2P capability check (2026-06-21)
+=================================
+Commands explicitly approved by the user:
+  nvidia-smi topo -p2p r
+  nvidia-smi topo -p2p w
+
+GPU0-GPU3 read capability:
+  Every off-diagonal pair reported OK.
+
+GPU0-GPU3 write capability:
+  Every off-diagonal pair reported OK.
+
+Interpretation:
+  Peer read/write is supported. The separate topology matrix reports SYS for
+  all pairs, so this is a PCIe + CPU/SMP path without NVLink/NVSwitch. This is
+  suitable for continued functional diagnosis, not absolute performance
+  alignment with NVLink/NVSwitch paper environments.

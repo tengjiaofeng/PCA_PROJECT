@@ -1,0 +1,3 @@
+$ /home/tjfeng/anaconda3/envs/vllm-nixl/bin/python /home/tjfeng/PCA_PROJECT/scripts/03b_launch_4gpu_servers.py --output-log-dir outputs/logs/real4gpu --stop-only
+Sent SIGTERM to process group aggregated_tp4 (pgid=504918)
+Process group aggregated_tp4 did not exit after SIGTERM; sent SIGKILL (pgid=504918)

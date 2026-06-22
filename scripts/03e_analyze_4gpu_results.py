@@ -26,6 +26,7 @@ SUMMARY_FIELDS = [
 ALLOWED_RESULT_TYPES = {
     "real_colocated", "real_aggregated_tp", "real_disaggregated_pd",
     "emulated_pd", "simulated_pd",
+    "measured_attempt_failed",
 }
 
 

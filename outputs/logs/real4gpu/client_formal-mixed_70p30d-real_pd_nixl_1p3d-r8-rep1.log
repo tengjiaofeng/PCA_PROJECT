@@ -1,0 +1,3 @@
+2026-06-22 02:15:23,735 | INFO | Run formal-mixed_70p30d-real_pd_nixl_1p3d-r8-rep1: 200 requests, endpoints=['http://127.0.0.1:8700/v1/completions']
+2026-06-22 02:15:45,599 | INFO | Completed 5 warmup requests
+2026-06-22 02:16:59,032 | INFO | Wrote outputs/metrics/real4gpu/online_formal-mixed_70p30d-real_pd_nixl_1p3d-r8-rep1.csv: 200 success, 0 failed

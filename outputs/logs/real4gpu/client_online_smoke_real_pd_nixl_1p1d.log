@@ -1,0 +1,3 @@
+2026-06-22 00:27:51,480 | INFO | Run real_pd_nixl_1p1d-20260621T162745Z-273379a8: 1 requests, endpoints=['http://127.0.0.1:8700/v1/completions']
+2026-06-22 00:27:51,481 | INFO | Completed 0 warmup requests
+2026-06-22 00:27:54,894 | INFO | Wrote outputs/metrics/real4gpu/online_smoke_real_pd_nixl_1p1d.csv: 1 success, 0 failed

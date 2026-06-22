@@ -1,0 +1,11 @@
+$ /home/tjfeng/anaconda3/envs/vllm-nixl/bin/python /home/tjfeng/PCA_PROJECT/scripts/03b_launch_4gpu_servers.py --config configs/real4gpu.yaml --mode colocated_4replica --output-log-dir outputs/logs/real4gpu --stop-existing --dry-run false
+No PID manifest found at outputs/logs/real4gpu/server_processes.json; nothing stopped.
+MODE=colocated_4replica
+MODEL=meta-llama/Llama-3.1-8B-Instruct
+PREFIX_CACHING_ENABLED=False
+[colocated_0] CUDA_VISIBLE_DEVICES=0 /home/tjfeng/anaconda3/envs/vllm-nixl/bin/python -m vllm.entrypoints.openai.api_server --model meta-llama/Llama-3.1-8B-Instruct --host 127.0.0.1 --port 8100 --dtype float16 --max-model-len 8192 --gpu-memory-utilization 0.85 --tensor-parallel-size 1 --no-enable-prefix-caching
+[colocated_1] CUDA_VISIBLE_DEVICES=1 /home/tjfeng/anaconda3/envs/vllm-nixl/bin/python -m vllm.entrypoints.openai.api_server --model meta-llama/Llama-3.1-8B-Instruct --host 127.0.0.1 --port 8101 --dtype float16 --max-model-len 8192 --gpu-memory-utilization 0.85 --tensor-parallel-size 1 --no-enable-prefix-caching
+[colocated_2] CUDA_VISIBLE_DEVICES=2 /home/tjfeng/anaconda3/envs/vllm-nixl/bin/python -m vllm.entrypoints.openai.api_server --model meta-llama/Llama-3.1-8B-Instruct --host 127.0.0.1 --port 8102 --dtype float16 --max-model-len 8192 --gpu-memory-utilization 0.85 --tensor-parallel-size 1 --no-enable-prefix-caching
+[colocated_3] CUDA_VISIBLE_DEVICES=3 /home/tjfeng/anaconda3/envs/vllm-nixl/bin/python -m vllm.entrypoints.openai.api_server --model meta-llama/Llama-3.1-8B-Instruct --host 127.0.0.1 --port 8103 --dtype float16 --max-model-len 8192 --gpu-memory-utilization 0.85 --tensor-parallel-size 1 --no-enable-prefix-caching
+Launch plan written to outputs/logs/real4gpu/colocated_4replica_launch_plan.json
+All endpoints healthy. PID manifest: outputs/logs/real4gpu/server_processes.json

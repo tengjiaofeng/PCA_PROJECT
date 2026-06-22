@@ -13,6 +13,10 @@ serving_mode_list:
   - real_pd_1p3d
   - real_pd_2p2d
   - real_pd_3p1d
+  - real_pd_nixl_1p1d
+  - real_pd_nixl_1p3d
+  - real_pd_nixl_2p2d
+  - real_pd_nixl_3p1d
 ports:
   colocated: [8100, 8101, 8102, 8103]
   aggregated_tp4: 8200
@@ -21,6 +25,9 @@ ports:
   # P2P NCCL example exposes client HTTP on 10001 and service discovery on 30001.
   pd_proxy: 10001
   pd_discovery_proxy: 30001
+  nixl_prefill: [8500, 8501, 8502]
+  nixl_decode: [8600, 8601, 8602]
+  nixl_proxy: 8700
 request_timeout_s: 300
 server_startup_timeout_s: 1200
 health_check_interval_s: 2
@@ -41,7 +48,13 @@ real_pd:
   prefill_kv_ports: [21001, 21002, 21003]
   decode_kv_ports: [22001, 22002, 22003]
   p2p_send_type: PUT_ASYNC
-  nccl_num_channels: 16
+  # Diagnostic transport profile for the SYS-only, non-NVLink topology.
+  # It forces NCCL away from direct GPU P2P while retaining the real PD stack.
+  nccl_num_channels: 1
+  nccl_env:
+    NCCL_P2P_DISABLE: "1"
+    NCCL_SHM_DISABLE: "0"
+    NCCL_DEBUG: INFO
   prefill_kv_buffer_size: "1e1"
   # About 8% of a 48GB A6000; tune only after a measured smoke test.
   decode_kv_buffer_size: "4e9"
@@ -59,6 +72,22 @@ real_pd:
   proxy_script_candidates:
     - /home/tjfeng/vllm/tests/v1/kv_connector/nixl_integration/toy_proxy_server.py
     - /home/tjfeng/vllm/examples/online_serving/disaggregated_serving/disagg_proxy_demo.py
+
+nixl:
+  connector: NixlConnector
+  proxy_script: /home/tjfeng/vllm/tests/v1/kv_connector/nixl_integration/toy_proxy_server.py
+  usage_guide: /home/tjfeng/vllm/docs/features/nixl_connector_usage.md
+  side_channel_port_base: 5600
+  kv_buffer_device: cuda
+  kv_load_failure_policy: fail
+  block_size: 128
+  gpu_memory_utilization: 0.85
+  env:
+    UCX_TLS: all
+    UCX_NET_DEVICES: all
+    VLLM_KV_CACHE_LAYOUT: HND
+    VLLM_NIXL_SIDE_CHANNEL_HOST: 127.0.0.1
+    VLLM_NIXL_ABORT_REQUEST_TIMEOUT: "120"
 
 workloads:
   - data/processed/workload_mixed_30p70d_synthetic_unique.jsonl

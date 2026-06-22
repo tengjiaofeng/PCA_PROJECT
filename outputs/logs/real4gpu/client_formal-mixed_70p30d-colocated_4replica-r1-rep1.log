@@ -1,0 +1,3 @@
+2026-06-22 01:29:11,214 | INFO | Run formal-mixed_70p30d-colocated_4replica-r1-rep1: 200 requests, endpoints=['http://127.0.0.1:8100/v1/completions', 'http://127.0.0.1:8101/v1/completions', 'http://127.0.0.1:8102/v1/completions', 'http://127.0.0.1:8103/v1/completions']
+2026-06-22 01:29:24,285 | INFO | Completed 5 warmup requests
+2026-06-22 01:32:47,210 | INFO | Wrote outputs/metrics/real4gpu/online_formal-mixed_70p30d-colocated_4replica-r1-rep1.csv: 200 success, 0 failed

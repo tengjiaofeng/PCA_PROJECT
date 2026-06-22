@@ -168,15 +168,27 @@ python scripts/03b_launch_4gpu_servers.py \
   --check-disagg-support
 ```
 
-输出保存在 `outputs/logs/real4gpu/disagg_support_check.txt`。检查顺序为当前 editable vLLM
-源码中的 `P2pNcclConnector + disaggregated_serving_p2p_nccl_xpyd`、NIXL、LMCache，单机
-4GPU 优先推荐 P2P NCCL。`recommended_route=p2p_nccl_xpyd` 只代表源码和示例完整，不表示
-NCCL/KV transfer 已经跑通；还需检查 proxy 依赖并完成端到端 streaming smoke test。
+P2P NCCL 路线已经完成真实 1P3D 尝试，但 KV data-plane 在 direct P2P 和 SHM fallback
+两种配置下均未完成首个传输，因此该路线停止继续调试，结果标记为
+`measured_attempt_failed`。证据见
+`outputs/logs/real4gpu/p2p_nccl_failure_summary.md`，不能标记为
+`real_disaggregated_pd`。
+
+当前正式候选路线为 editable vLLM 自带的 `NixlConnector`。以下检查只读取 Python 包和
+源码，不初始化 CUDA：
+
+```bash
+python scripts/03b_launch_4gpu_servers.py --check-nixl-support
+```
+
+结果写入 `outputs/logs/real4gpu/nixl_support_check.txt`。当前环境能找到 connector、官方文档
+和测试，但 `nixl` 与 `lmcache` 均不可导入；安装建议见
+`outputs/logs/real4gpu/nixl_installation_plan.md`，其中命令尚未执行。
 
 ```bash
 python scripts/03b_launch_4gpu_servers.py --mode colocated_4replica --dry-run true
 python scripts/03b_launch_4gpu_servers.py --mode aggregated_tp4 --dry-run true
-python scripts/03b_launch_4gpu_servers.py --mode real_pd_1p3d --dry-run true
+python scripts/03b_launch_4gpu_servers.py --mode real_pd_nixl_1p1d --dry-run true
 ```
 
 ### 启动 4Replica 主 baseline
@@ -207,30 +219,34 @@ python scripts/03b_launch_4gpu_servers.py \
 TP4 使用单个 8200 端口。Llama 8B 能装入单张 A6000，因此 TP4 只是参考，不作为默认
 吞吐 baseline。
 
-### 启动真实 PD ratio
+### NIXL 真实 PD 候选路线
 
-只有 support check 的结构性与用户态依赖完整后才运行。下面以 1P:3D 为例；2P:2D、3P:1D
-只需替换 `--mode`。当前首选 launcher 路线直接适配 editable vLLM 自带的
-`disaggregated_serving_p2p_nccl_xpyd` 示例，使用 `P2pNcclConnector`、`PUT_ASYNC` 和独立
-P/D KV ports；不会因为 NIXL/LMCache 缺失而禁用 P2P 路线。
+先在隔离环境中安装并验证 NIXL，避免破坏现有 editable vLLM 环境（以下仅为建议，项目脚本
+不会自动执行）：
+
+```bash
+conda create -n vllm-nixl --clone vllm
+conda activate vllm-nixl
+python -m pip install nixl
+python -c 'import vllm,nixl; print(vllm.__file__); assert vllm.__file__.startswith("/home/tjfeng/vllm/")'
+```
+
+安装经用户批准并验证后，只先运行 1P1D smoke（GPU 0 prefill、GPU 1 decode）。1P3D、2P2D、
+3P1D 当前只允许 dry-run：
 
 ```bash
 python scripts/03b_launch_4gpu_servers.py \
   --config configs/real4gpu.yaml \
-  --mode real_pd_1p3d \
+  --mode real_pd_nixl_1p1d \
   --allow-experimental-pd true \
   --stop-existing \
   --dry-run false
 ```
 
-P2P proxy 对外 HTTP 端口为 10001，服务发现端口为 30001。只有 server、proxy health check、
-P/D 注册和实际 streaming 请求均成功，
+NIXL 1P1D 使用 prefill 端口 8500、decode 端口 8600、proxy 端口 8700，以及独立 side-channel
+端口。只有 server、proxy health check、P/D 注册和实际 streaming 请求均成功，
 结果才能标为 `real_disaggregated_pd`。任何失败都应保留 component log 和
 `*_launch_failure.log`。
-
-`real_pd.host_mem_pool_size_gb` 控制每个 P/D EngineCore 的 pinned host-memory overflow
-pool。项目默认设为 4 GiB，因此 1P3D/2P2D/3P1D 都约占 4×4=16 GiB host pool；该参数与
-Decode GPU 上的 `decode_kv_buffer_size` 不是同一块内存。修改后必须重启服务才会生效。
 
 ### 运行 online workload
 
@@ -254,6 +270,42 @@ python scripts/03c_run_online_workload_client.py \
 测量 TTFT。最终 usage 中的 completion token 数用于计算 TPOT。warmup 失败时不会开始正式测量；
 正式阶段的单请求失败则写入 CSV 而不中断其他请求。
 
+### 自动编排多模式实验
+
+`03f_run_real4gpu_experiments.py` 自动完成“启动并等待健康检查、运行客户端、保存状态、停止
+服务、切换模式”。默认只输出计划，不启动服务：
+
+```bash
+python scripts/03f_run_real4gpu_experiments.py --preset pilot --execute false
+```
+
+确认计划后，运行三个 NIXL ratio 的 20-request mixed-50 pilot：
+
+```bash
+python scripts/03f_run_real4gpu_experiments.py --preset pilot --execute true
+```
+
+两个 baseline 使用相同 pilot 参数并由独立预设自动切换：
+
+```bash
+python scripts/03f_run_real4gpu_experiments.py --preset baseline --execute false
+python scripts/03f_run_real4gpu_experiments.py --preset baseline --execute true
+```
+
+`formal` 预设包含 4Replica、TP4、NIXL 1P3D/2P2D/3P1D，三个 mixed workload、五个
+arrival rate 和三次重复。必须先检查其 225-run 计划，再显式执行：
+
+```bash
+python scripts/03f_run_real4gpu_experiments.py --preset formal --execute false
+python scripts/03f_run_real4gpu_experiments.py --preset formal --execute true
+```
+
+编排器默认跳过已有成功 CSV，失败时停止当前服务并终止后续实验，且在异常或 Ctrl-C 时执行
+最终清理。GPU telemetry 默认关闭；只有取得 GPU 监控批准后才同时传入
+`--collect-gpu-metrics true --gpu-monitoring-approved true`。运行计划保存在
+`outputs/logs/real4gpu/experiment_plan_<preset>.json`，逐项状态保存在
+`outputs/metrics/real4gpu/experiment_status_<preset>_<timestamp>.csv`。
+
 对于 `aggregated_tp4` 或真实 PD，替换 `--mode` 和输出文件名：
 
 ```bash
@@ -264,10 +316,11 @@ python scripts/03c_run_online_workload_client.py \
   --arrival-rate 2.0 --concurrency 8 --stream true
 
 python scripts/03c_run_online_workload_client.py \
-  --workload data/processed/workload_mixed_50p50d_synthetic_unique.jsonl \
-  --mode real_pd_1p3d \
-  --output outputs/metrics/real4gpu/online_mixed_50p50d_real_pd_1p3d_r2_c8.csv \
-  --arrival-rate 2.0 --concurrency 8 --stream true
+  --workload data/processed/workload_short_short_synthetic_unique.jsonl \
+  --mode real_pd_nixl_1p1d \
+  --output outputs/metrics/real4gpu/online_smoke_real_pd_nixl_1p1d.csv \
+  --arrival-rate 0.5 --concurrency 1 --max-requests 1 --warmup 0 \
+  --request-timeout-s 120 --stream true
 ```
 
 ### 并行采集 GPU telemetry
@@ -318,6 +371,8 @@ python scripts/07_plot_results.py \
 - `real_disaggregated_pd`：真实 KV transfer 的 P/D 分离请求；必须通过端到端验证。
 - `emulated_pd`：明确实现的 P/D emulation，不代表真实 KV-transfer serving。
 - `simulated_pd`：trace-driven queueing simulation。
+- `measured_attempt_failed`：启动或真实请求已执行、但端到端 PD 未成功的失败尝试；不得纳入
+  `real_disaggregated_pd` 性能统计。
 
 ## 数据真实性与注意事项
 

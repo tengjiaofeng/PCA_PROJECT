@@ -1,0 +1,4 @@
+$ /home/tjfeng/anaconda3/envs/vllm-nixl/bin/python /home/tjfeng/PCA_PROJECT/scripts/03c_run_online_workload_client.py --config configs/real4gpu.yaml --mode aggregated_tp4 --workload data/processed/workload_mixed_30p70d_synthetic_unique.jsonl --output outputs/metrics/real4gpu/online_formal-mixed_30p70d-aggregated_tp4-r4-rep1.csv --run-id formal-mixed_30p70d-aggregated_tp4-r4-rep1 --arrival-rate 4.0 --concurrency 64 --max-requests 200 --warmup 5 --request-timeout-s 300.0 --stream true --seed 42 --log-file outputs/logs/real4gpu/client_formal-mixed_30p70d-aggregated_tp4-r4-rep1.log
+2026-06-22 01:40:12,123 | INFO | Run formal-mixed_30p70d-aggregated_tp4-r4-rep1: 200 requests, endpoints=['http://127.0.0.1:8200/v1/completions']
+2026-06-22 01:40:20,171 | INFO | Completed 5 warmup requests
+2026-06-22 01:41:19,351 | INFO | Wrote outputs/metrics/real4gpu/online_formal-mixed_30p70d-aggregated_tp4-r4-rep1.csv: 200 success, 0 failed

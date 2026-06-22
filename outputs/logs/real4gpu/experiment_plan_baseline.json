@@ -1,0 +1,44 @@
+{
+  "created_at_utc": "2026-06-21T17:05:05.773664+00:00",
+  "python": "/home/tjfeng/anaconda3/envs/vllm-nixl/bin/python",
+  "preset": "baseline",
+  "execute": true,
+  "matrix": {
+    "modes": [
+      "colocated_4replica",
+      "aggregated_tp4"
+    ],
+    "workloads": [
+      "data/processed/workload_mixed_50p50d_synthetic_unique.jsonl"
+    ],
+    "arrival_rates": [
+      1.0
+    ],
+    "repeats": 1,
+    "max_requests": 20,
+    "warmup": 1,
+    "concurrency": 4
+  },
+  "jobs": [
+    {
+      "mode": "colocated_4replica",
+      "workload": "data/processed/workload_mixed_50p50d_synthetic_unique.jsonl",
+      "workload_label": "mixed_50p50d",
+      "arrival_rate": 1.0,
+      "repeat": 1,
+      "seed": 42,
+      "run_id": "baseline-mixed_50p50d-colocated_4replica-r1-rep1",
+      "output": "outputs/metrics/real4gpu/online_baseline-mixed_50p50d-colocated_4replica-r1-rep1.csv"
+    },
+    {
+      "mode": "aggregated_tp4",
+      "workload": "data/processed/workload_mixed_50p50d_synthetic_unique.jsonl",
+      "workload_label": "mixed_50p50d",
+      "arrival_rate": 1.0,
+      "repeat": 1,
+      "seed": 42,
+      "run_id": "baseline-mixed_50p50d-aggregated_tp4-r1-rep1",
+      "output": "outputs/metrics/real4gpu/online_baseline-mixed_50p50d-aggregated_tp4-r1-rep1.csv"
+    }
+  ]
+}
